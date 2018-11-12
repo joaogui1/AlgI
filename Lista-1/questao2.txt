@@ -1,0 +1,2 @@
+As vantagens de se programar com TAD estão na simplicidade gerada pela abstração que nos poupa de ter que pensar nos detalhes da implementação do tipo de dados e na facilidade de modificação e extensão de um TAD sem correr riscos de causar problemas nos códigos que dependem dele.
+

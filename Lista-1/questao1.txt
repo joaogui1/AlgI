@@ -1,0 +1,3 @@
+Um tipo abstrato de dados, ou TAD, é uma especificação de um conjunto de dados e dos tipos de operações que podemos fazer sobre eles. Uma de suas principais características é o encapsulamento de dados
+que permite reduzir a informação necessária para a programação de um algoritmo.
+

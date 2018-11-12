@@ -1,0 +1,18 @@
+Soma:
+Recebe dois números reais, a e b;
+Retorna um número real, a soma de a e b;
+
+Subtracao:
+Recebe dois números reais, a e b;
+Retorna um número real, a - b;
+
+Multiplicação:
+Recebe dois números reais, a e b;
+Retorna um numero real, a*b;
+
+Divisão:
+Recebe dois números reais, a e b;
+Caso b = 0, imprime erro;
+Retorna um número real, a/b;
+
+
