@@ -73,7 +73,7 @@ int removeListWS(listWS* l, elem x){
 				if(l->start != NULL) l->start->prev = NULL;
 			} else if(target == l->end){ //removing from end
 				l->end = target->prev;
-				if(l->end != NULL) l->end->next = NULL;
+				if(l->end != NULL) l->end->next = l->sentinel;
 			} else{ //removing from middle
 				target->next->prev = target->prev;
 				target->prev->next = target->next;
@@ -110,6 +110,7 @@ void printListWS(listWS* l){
 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
 		curr = curr->next;
 	}
+	printf("\n");
 	return;
 }
 

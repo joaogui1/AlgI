@@ -103,6 +103,7 @@ void printList(list* l){
 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
 		curr = curr->next;
 	}
+	printf("\n");
 	return;
 }
 

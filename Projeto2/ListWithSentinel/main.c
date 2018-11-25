@@ -13,6 +13,17 @@ int main(int argc, const char *argv[]){
 	}
 
 	printListWS(ls);
+	removeListWS(ls, 4);
+	printListWS(ls);
+
+	insertListWS(ls, 1);
+	insertListWS(ls, 9);
+	insertListWS(ls, 4);
+	printListWS(ls);
+
+	removeListWS(ls, 1);
+	removeListWS(ls, 9);
+	printListWS(ls);
 
 	destroyListWS(ls);
 
