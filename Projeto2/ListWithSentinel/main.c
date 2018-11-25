@@ -21,6 +21,12 @@ int main(int argc, const char *argv[]){
 	insertListWS(ls, 4);
 	printListWS(ls);
 
+	printf("%d\n", searchListWS(ls, 1));
+	printf("%d\n", searchListWS(ls, 5));
+	printf("%d\n", searchListWS(ls, 9));
+	printf("%d\n", searchListWS(ls, 10));
+	printf("%d\n", searchListWS(ls, 2));
+
 	removeListWS(ls, 1);
 	removeListWS(ls, 9);
 	printListWS(ls);
