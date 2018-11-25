@@ -16,10 +16,10 @@ int main(int argc, const char *argv[]){
 	printf("\n");
 	
 	insertList(l, 1);
+	insertList(l, 1);
 	insertList(l, 9);
 	printList(l);
 	printf("\n");
-	
 
 	insertList(l, 7);
 	printList(l);
