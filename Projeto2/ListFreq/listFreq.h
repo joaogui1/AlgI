@@ -1,13 +1,14 @@
+#ifndef listFreq
 typedef int elem;
 
-typedef struct _node{
+typedef struct _nodeLF {
 	elem info;
-	struct _node *next, *prev;
-} node;
+	struct _nodeLF *next, *prev;
+} nodeLF;
 
 typedef struct _listFreq{
-	node* start;
-	node* end;
+	nodeLF* start;
+	nodeLF* end;
 	int size;
 } listFreq;
 
@@ -18,3 +19,4 @@ int searchListFreq(listFreq* l, elem x);
 int isEmptyListFreq(listFreq* l);
 void printListFreq(listFreq* l);
 void destroyListFreq(listFreq* l);
+#endif

@@ -1,13 +1,14 @@
+#ifndef list
 typedef int elem;
 
-typedef struct _node{
+typedef struct _nodeL {
 	elem info;
-	struct _node *next, *prev;
-}node;
+	struct _nodeL *next, *prev;
+} nodeL;
 
-typedef struct _list{
-	node* start;
-	node* end;
+typedef struct _list {
+	nodeL* start;
+	nodeL* end;
 } list;
 
 list* createList();
@@ -17,3 +18,4 @@ int searchList(list* l, elem x);
 int isEmptyList(list* l);
 void printList(list* l);
 void destroyList(list* l);
+#endif

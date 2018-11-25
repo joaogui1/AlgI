@@ -15,7 +15,7 @@ list* createList(){
 }
 
 int insertList(list* l, elem x){
-	node* newNode = malloc(sizeof(node));
+	nodeL* newNode = malloc(sizeof(nodeL));
 	if(newNode == NULL)
 		return 1;
 
@@ -27,7 +27,7 @@ int insertList(list* l, elem x){
 		l->start = newNode;
 		l->end = newNode;
 	} else {
-		node* position = l->start;
+		nodeL* position = l->start;
 		
 		//search position to insert
 		while(position != NULL && position->info < x){
@@ -55,7 +55,7 @@ int removeList(list* l, elem x){
 	if(isEmptyList(l))
 		return 1;
 
-	node* target = l->start;
+	nodeL* target = l->start;
 	
 	while(target != NULL && target->info <= x){
 		
@@ -83,7 +83,7 @@ int removeList(list* l, elem x){
 }
 
 int searchList(list* l, elem x){
-	node* target = l->start;
+	nodeL* target = l->start;
 	while(target != NULL && target->info <= x){
 		if(target->info == x)
 			return 1;
@@ -98,7 +98,7 @@ int isEmptyList(list* l){
 }
 
 void printList(list* l){
-	node* curr = l->start;
+	nodeL* curr = l->start;
 	while(curr != NULL){
 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
 		curr = curr->next;

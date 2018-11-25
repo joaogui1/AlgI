@@ -1,14 +1,15 @@
+#ifndef listWS
 typedef int elem;
 
-typedef struct _node{
+typedef struct _nodeWS {
 	elem info;
-	struct _node *next, *prev;
-}node;
+	struct _nodeWS *next, *prev;
+} nodeWS;
 
-typedef struct _listWS{
-	node* start;
-	node* end;
-	node* sentinel;
+typedef struct _listWS {
+	nodeWS* start;
+	nodeWS* end;
+	nodeWS* sentinel;
 } listWS;
 
 listWS* createListWS();
@@ -18,3 +19,4 @@ int searchListWS(listWS* l, elem x);
 int isEmptyListWS(listWS* l);
 void printListWS(listWS* l);
 void destroyListWS(listWS* l);
+#endif

@@ -15,7 +15,7 @@ listWS* createListWS(){
 }
 
 int insertListWS(listWS* l, elem x){
-	node* newNode = malloc(sizeof(node));
+	nodeWS* newNode = malloc(sizeof(nodeWS));
 	if(newNode == NULL)
 		return 1;
 
@@ -27,12 +27,12 @@ int insertListWS(listWS* l, elem x){
 		l->start = newNode;
 		l->end = newNode;
 		
-		node* sentinelaux = malloc(sizeof(node));
+		nodeWS* sentinelaux = malloc(sizeof(nodeWS));
 		l->sentinel = sentinelaux;
 		l->end->next = l->sentinel;
 		l->sentinel->prev = l->end;
 	} else {
-		node* position = l->start;
+		nodeWS* position = l->start;
 		
 		//search position to insert
 		while(position != l->sentinel && position->info < x){
@@ -61,7 +61,7 @@ int removeListWS(listWS* l, elem x){
 	if(isEmptyListWS(l))
 		return 1;
 
-	node* target = l->start;
+	nodeWS* target = l->start;
 	
 	while(target != l->sentinel && target->info <= x){
 		
@@ -90,7 +90,7 @@ int removeListWS(listWS* l, elem x){
 }
 
 int searchListWS(listWS* l, elem x){
-	node* target = l->start;
+	nodeWS* target = l->start;
 	while(target != l->sentinel && target->info <= x){
 		if(target->info == x)
 			return 1;
@@ -105,7 +105,7 @@ int isEmptyListWS(listWS* l){
 }
 
 void printListWS(listWS* l){
-	node* curr = l->start;
+	nodeWS* curr = l->start;
 	while(curr != l->sentinel) {
 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
 		curr = curr->next;

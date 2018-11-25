@@ -1,8 +1,9 @@
+#ifndef arrayBS
 #define totalSize 100005
 
 typedef int elem;
 
-typedef struct _arrayBS{
+typedef struct _arrayBS {
 	int maxSize;
 	int currSize;
 	int isSorted;
@@ -17,3 +18,4 @@ int isEmptyArrayBS(arrayBS* abs);
 int isFullArrayBS(arrayBS* abs);
 void printArrayBS(arrayBS* abs);
 void destroyArrayBS(arrayBS* abs);
+#endif

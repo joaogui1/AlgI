@@ -8,12 +8,11 @@ int main(int argc, const char *argv[]){
 
 	list* l = createList();
 	
-	for(int i = 2; i < 7; i++){
+	for(int i = 0; i < 10000; i++){
 		insertList(l, i);
 	}
 	
 	printList(l);
-	printf("\n");
 	
 	insertList(l, 1);
 	insertList(l, 1);
