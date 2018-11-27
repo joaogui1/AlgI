@@ -10,20 +10,15 @@ int main(int argc, const char *argv[]){
 		insertArrayBS(abs, i);
 	}
 
-	printArrayBS(abs);
 	insertArrayBS(abs, 1);
 	printArrayBS(abs);
-	printf("\n%d\n", searchArrayBS(abs, 1));
-	printf("\n%d\n\n", searchArrayBS(abs, 4));
+	
+	insertArrayBS(abs, 10);
+	printArrayBS(abs);
 
-	removeArrayBS(abs, 3);
+	insertArrayBS(abs, 8);
 	printArrayBS(abs);
-	removeArrayBS(abs, 1);
-	printArrayBS(abs);
-	removeArrayBS(abs, 6);
-	printArrayBS(abs);
-	removeArrayBS(abs, 6);
-	printArrayBS(abs);
+
 	destroyArrayBS(abs);
 	
 	return 0;
