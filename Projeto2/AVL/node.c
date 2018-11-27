@@ -80,6 +80,7 @@ int InsertNode(Node **n, elem x){
     *n = CreateNode(x);
     return *n == NULL;
   }
+
   if((*n) -> info == x)
     return 1;
   if((*n) -> info > x) ret = InsertNode(&((*n) -> left), x);
@@ -91,25 +92,26 @@ int InsertNode(Node **n, elem x){
   if(BalanceFactor > 1 && x < (*n) -> left -> info)
     RightRotation(n);
 
-  else if(BalanceFactor < -1 && x > (*n) -> right -> info){
-    printf("before rotation\n");
+  else if(BalanceFactor < -1 && x > (*n) -> right -> info)
     LeftRotation(n);
-    printf("after rotation\n");
-  }
 
-  // else if(BalanceFactor > 1 && x > (*n) -> left -> info)
-  //   LeftRightRotation(n);
-  //
-  // else if(BalanceFactor < -1 && x < (*n) -> right -> info)
-  //   RightLeftRotation(n);
+  else if(BalanceFactor > 1 && x > (*n) -> left -> info)
+    LeftRightRotation(n);
+
+  else if(BalanceFactor < -1 && x < (*n) -> right -> info)
+    RightLeftRotation(n);
 
   return ret;
 }
 
 int RemoveNode(Node **n, elem x){
   if(*n == NULL)  return 1;
-  int children = 0;
+  int children = 0, ret;
   Node *aux, *AuxParent;
+
+  if((*n) -> info > x) return RemoveNode(&((*n) -> left), x);
+  if((*n) -> info < x) return RemoveNode(&((*n) -> right), x);
+
   if((*n)->info == x){
     if((*n) -> left != NULL)  ++children;
     if((*n) -> right != NULL)  ++children;
@@ -133,10 +135,26 @@ int RemoveNode(Node **n, elem x){
         aux = aux -> right;
       }
       (*n) -> info = aux -> info;
-      printf("%c\n", "rl"[(AuxParent -> left == aux)]);
-      return (AuxParent -> left == aux) ? RemoveNode(&(AuxParent -> left), aux->info) : RemoveNode(&(AuxParent -> right), aux -> info);
+      ret = (AuxParent -> left == aux) ? RemoveNode(&(AuxParent -> left), aux->info) : RemoveNode(&(AuxParent -> right), aux -> info);
     }
   }
-  if((*n) -> info > x) return RemoveNode(&((*n) -> left), x);
-  if((*n) -> info < x) return RemoveNode(&((*n) -> right), x);
+
+  if((*n) == NULL)  return ret;
+
+  (*n) -> height = 1 + (GetHeight((*n) -> left), GetHeight((*n) -> right));
+  int BalanceFactor = GetHeight((*n) -> left) - GetHeight((*n) -> right);
+
+  if(BalanceFactor > 1){
+    int LeftBalance = GetHeight((*n) -> left -> left) - GetHeight((*n) -> left -> right);
+    if(LeftBalance >= 0)  RightRotation(n);
+    else  LeftRightRotation(n);
+  }
+
+  else if(BalanceFactor < -1){
+    int RightBalance = GetHeight((*n) -> right -> left) - GetHeight((*n) -> right -> right);
+    if(RightBalance >= 0)  LeftRotation(n);
+    else  RightLeftRotation(n);
+  }
+
+  return 0;
 }

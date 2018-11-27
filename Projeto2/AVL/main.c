@@ -16,7 +16,9 @@ int main(){
   for(int i = 0; i < n; ++i){
     scanf("%d", &aux);
     insert(t, aux);
+    printf("ok\n");
   }
+  printf("inseriu\n");
 
   printf("%d\n", t -> root -> info);
   for(int i = 0; i < q; ++i){
