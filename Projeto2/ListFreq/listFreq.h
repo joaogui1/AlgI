@@ -1,16 +1,8 @@
-#ifndef listFreq
+#ifndef LISTFREQ_H
+#define LISTFREQ_H
+
 typedef int elem;
-
-typedef struct _nodeLF {
-	elem info;
-	struct _nodeLF *next, *prev;
-} nodeLF;
-
-typedef struct _listFreq{
-	nodeLF* start;
-	nodeLF* end;
-	int size;
-} listFreq;
+typedef struct _listFreq listFreq;
 
 listFreq* createListFreq();
 int insertListFreq(listFreq* l, elem x);

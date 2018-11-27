@@ -2,6 +2,16 @@
 #include <stdlib.h>
 #include "list.h"
 
+typedef struct _node {
+	elem info;
+	struct _node *next, *prev;
+} node;
+
+struct _list {
+	node* start;
+	node* end;
+};
+
 list* createList(){
 	list* newList = malloc(sizeof(list));
 	
@@ -15,7 +25,7 @@ list* createList(){
 }
 
 int insertList(list* l, elem x){
-	nodeL* newNode = malloc(sizeof(nodeL));
+	node* newNode = malloc(sizeof(node));
 	if(newNode == NULL)
 		return 1;
 
@@ -27,7 +37,7 @@ int insertList(list* l, elem x){
 		l->start = newNode;
 		l->end = newNode;
 	} else {
-		nodeL* position = l->start;
+		node* position = l->start;
 		
 		//search position to insert
 		while(position != NULL && position->info < x){
@@ -55,7 +65,7 @@ int removeList(list* l, elem x){
 	if(isEmptyList(l))
 		return 1;
 
-	nodeL* target = l->start;
+	node* target = l->start;
 	
 	while(target != NULL && target->info <= x){
 		
@@ -83,7 +93,7 @@ int removeList(list* l, elem x){
 }
 
 int searchList(list* l, elem x){
-	nodeL* target = l->start;
+	node* target = l->start;
 	while(target != NULL && target->info <= x){
 		if(target->info == x)
 			return 1;
@@ -98,7 +108,7 @@ int isEmptyList(list* l){
 }
 
 void printList(list* l){
-	nodeL* curr = l->start;
+	node* curr = l->start;
 	while(curr != NULL){
 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
 		curr = curr->next;

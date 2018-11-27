@@ -2,11 +2,16 @@
 #include <stdlib.h>
 #include "arrayBinarySearch.h"
 
+struct _arrayBS {
+	int maxSize;
+	int currSize;
+	int vec[totalSize];
+};
+
 arrayBS* createArrayBS(int size){
 	arrayBS* newArray = malloc(sizeof(arrayBS));
 	newArray->maxSize = size;
 	newArray->currSize = 0;
-	newArray->isSorted = 0;
 	return newArray;
 }	
 
@@ -14,9 +19,15 @@ int insertArrayBS(arrayBS* abs, elem x) {
 	if(isFullArrayBS(abs)) 
 		return 1;
 	
-	abs->vec[abs->currSize] = x;
+	int pos = 0;
+	while(pos < abs->currSize && abs->vec[pos] < x)	pos++;
+	
+	for(int i = abs->currSize; i > pos; i--){
+		abs->vec[i] = abs->vec[i-1]; 
+	}
+
+	abs->vec[pos] = x;
 	abs->currSize++;
-	abs->isSorted = 0;
 
 	return 0;
 }
@@ -39,47 +50,9 @@ int removeArrayBS(arrayBS* abs, elem x){
 	return 0;
 }
 
-void mergeSort(int* vet, int start, int end){
-	//base case
-	if (start >= end) return;
-	
-	int mid = (start+end)/2;
-	
-	//recursion step
-	mergeSort(vet, start, mid);
-	mergeSort(vet, mid+1, end);
-	
-	//combination of the partial results
-	int i = start;
-	int j = mid+1;
-	int k = 0;
-
-	int* aux = malloc((end - start + 1) * sizeof(int));
-
-	//merging sides
-	while(i <= mid || j <= end){
-		if(j > end || i <= mid && vet[i] < vet[j])
-			aux[k++] = vet[i++];
-		else
-			aux[k++] = vet[j++];	
-	}
-
-	for(int i = start; i <= end; ++i){
-		vet[i] = aux[i-start];
-	}
-
-	free(aux);
-}
-
-
 int searchArrayBS(arrayBS* abs, elem x){
 	if(abs == NULL)
 		return -1;
-
-	if(!abs->isSorted){
-		mergeSort(abs->vec, 0, abs->currSize-1);
-		abs->isSorted = 1;
-	}
 
 	int left = 0, rigth = abs->currSize-1, mid;
 

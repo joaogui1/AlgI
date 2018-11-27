@@ -1,16 +1,9 @@
-#ifndef listWS
+#ifndef LISTWS_H
+#define LISTWS_H
+
 typedef int elem;
 
-typedef struct _nodeWS {
-	elem info;
-	struct _nodeWS *next, *prev;
-} nodeWS;
-
-typedef struct _listWS {
-	nodeWS* start;
-	nodeWS* end;
-	nodeWS* sentinel;
-} listWS;
+typedef struct _listWS listWS;
 
 listWS* createListWS();
 int insertListWS(listWS* l, elem x);

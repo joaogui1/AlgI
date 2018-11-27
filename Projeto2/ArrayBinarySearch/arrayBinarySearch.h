@@ -1,14 +1,10 @@
-#ifndef arrayBS
+#ifndef ARRAYBS_H
+#define ARRAYBS_H	
+
 #define totalSize 100005
 
 typedef int elem;
-
-typedef struct _arrayBS {
-	int maxSize;
-	int currSize;
-	int isSorted;
-	int vec[totalSize];
-} arrayBS;
+typedef struct _arrayBS arrayBS;
 
 arrayBS* createArrayBS(int size);
 int insertArrayBS(arrayBS* abs, elem x);

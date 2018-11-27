@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "node.h"
 
 Node *CreateNode(elem x, int BF){
