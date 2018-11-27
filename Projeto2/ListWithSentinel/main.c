@@ -27,6 +27,7 @@ int main(int argc, const char *argv[]){
 	printf("%d\n", searchListWS(ls, 10));
 	printf("%d\n", searchListWS(ls, 2));
 
+
 	removeListWS(ls, 1);
 	removeListWS(ls, 9);
 	printListWS(ls);

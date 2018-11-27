@@ -19,7 +19,8 @@ int main(int argc, const char *argv[]){
 	insertArrayBS(abs, 8);
 	printArrayBS(abs);
 
-	destroyArrayBS(abs);
+	destroyArrayBS(abs);insertArrayBS(abs, 10);
+	printArrayBS(abs);
 	
 	return 0;
 }
