@@ -2,6 +2,7 @@
 #include <stdlib.h>
 typedef struct node{
   elem info;
+  int BalanceFactor;
   struct node *left, *right;
 } Node;
 Node *CreateNode(elem x);

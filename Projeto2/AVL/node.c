@@ -1,9 +1,10 @@
 #include "node.h"
 
-Node *CreateNode(elem x){
+Node *CreateNode(elem x, int BF){
   Node  *ret;
   ret = calloc(1, sizeof(Node));
   ret -> info = x;
+  ret -> BalanceFactor = BF;
   return ret;
 }
 
@@ -19,6 +20,38 @@ Node *SearchNode(Node *n, elem x){
   if(n -> info < x) return SearchNode(n -> right, x);
   return NULL;
 }
+
+void LeftRotation(Node **n){
+  Node *NewRoot, *reallocate;
+  NewRoot = (*n) -> right;
+  reallocate = NewRoot -> left;
+  NewRoot -> left = *n;
+  (*n) -> right = reallocate;
+  *n = NewRoot;
+  return;
+}
+
+
+void RightRotation(Node **n){
+  Node *NewRoot, *reallocate;
+  NewRoot = (*n) -> left;
+  reallocate = NewRoot -> right;
+  NewRoot -> right = *n;
+  (*n) -> left = reallocate;
+  *n = NewRoot;
+  return;
+}
+
+void LeftRightRotation(Node **n){
+  LeftRotation(&((*n) -> left));
+  RightRotation(n);
+}
+
+void RightLeftRotation(Node **n){
+  RightRotation(&((*n) -> right));
+  LeftRotation(n);
+}
+
 
 int InsertNode(Node **n, elem x){
   if(*n == NULL){
