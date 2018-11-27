@@ -15,12 +15,11 @@ int max(int a, int b);
 Node *CreateNode(elem x);
 void DestroyNode(Node *n);
 int GetHeight(Node *n);
-void LeftRotation(Node **n);
-void RightRotation(Node **n);
-void LeftRightRotation(Node **n);
-void RightLeftRotation(Node **n);
+Node * LeftRotation(Node *n);
+Node * RightRotation(Node *n);
+Node * LeftRightRotation(Node *n);
+Node * RightLeftRotation(Node *n);
 Node *SearchNode(Node *n, elem x);
-int InsertNode(Node **n, elem x);
-int RemoveNode(Node **n, elem x);
-
+Node * InsertNode(Node *n, elem x);
+Node * RemoveNode(Node *n, elem x);
 #endif

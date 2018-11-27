@@ -7,5 +7,5 @@ typedef struct{
 Tree *create();
 void destroy(Tree *t);
 Node *search(Tree *t, elem x);
-int insert(Tree *t, elem x);
-int Remove(Tree *t, elem x);
+Node *insert(Tree *t, elem x);
+Node *Remove(Tree *t, elem x);

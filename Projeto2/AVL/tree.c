@@ -10,10 +10,10 @@ void destroy(Tree *t){
 Node *search(Tree *t, elem x){
   SearchNode(t -> root, x);
 }
-int insert(Tree *t, elem x){
-  return InsertNode(&(t -> root), x);
+Node *insert(Tree *t, elem x){
+  return t -> root = InsertNode(t -> root, x);
 }
 
-int Remove(Tree *t, elem x){
-  return RemoveNode(&(t -> root), x);
+Node *Remove(Tree *t, elem x){
+  return RemoveNode(t -> root, x);
 }
