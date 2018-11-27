@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include "listFreq.h"
 
+typedef struct _node {
+	elem info;
+	struct _node *next, *prev;
+} node;
+
+struct _listFreq{
+	node* start;
+	node* end;
+	int size;
+};
+
 listFreq* createListFreq(){
 	listFreq* newListFreq = malloc(sizeof(listFreq));
 	
@@ -16,7 +27,7 @@ listFreq* createListFreq(){
 }
 
 int insertListFreq(listFreq* lf, elem x){
-	nodeLF* newNode = malloc(sizeof(nodeLF));
+	node* newNode = malloc(sizeof(node));
 	if(newNode == NULL)
 		return 1;
 
@@ -45,7 +56,7 @@ int removeListFreq(listFreq* lf, elem x){
 	if(isEmptyListFreq(lf))
 		return 1;
 
-	nodeLF* target = lf->start;
+	node* target = lf->start;
 
 	for(int i = 0; i < lf->size; i++){
 		if(target->info == x){
@@ -73,7 +84,7 @@ int removeListFreq(listFreq* lf, elem x){
 }
 
 int searchListFreq(listFreq* lf, elem x){
-	nodeLF* target = lf->start;
+	node* target = lf->start;
 	
 	for (int i = 0; i < lf->size; ++i){
 		if(target->info == x){
@@ -97,7 +108,7 @@ int isEmptyListFreq(listFreq* lf){
 }
 
 void printListFreq(listFreq* lf){
-	nodeLF* curr = lf->start;
+	node* curr = lf->start;
 	
 	for(int i = 0; i < lf->size; i++){
 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);

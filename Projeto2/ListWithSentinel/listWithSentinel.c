@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include "listWithSentinel.h"
 
+typedef struct _node {
+	elem info;
+	struct _node *next, *prev;
+} node;
+
+struct _listWS {
+	node* start;
+	node* end;
+	node* sentinel;
+};
+
 listWS* createListWS(){
 	listWS* newList = malloc(sizeof(listWS));
 	
@@ -15,7 +26,7 @@ listWS* createListWS(){
 }
 
 int insertListWS(listWS* l, elem x){
-	nodeWS* newNode = malloc(sizeof(nodeWS));
+	node* newNode = malloc(sizeof(node));
 	if(newNode == NULL)
 		return 1;
 
@@ -27,12 +38,12 @@ int insertListWS(listWS* l, elem x){
 		l->start = newNode;
 		l->end = newNode;
 		
-		nodeWS* sentinelaux = malloc(sizeof(nodeWS));
+		node* sentinelaux = malloc(sizeof(node));
 		l->sentinel = sentinelaux;
 		l->end->next = l->sentinel;
 		l->sentinel->prev = l->end;
 	} else {
-		nodeWS* position = l->start;
+		node* position = l->start;
 		
 		//search position to insert
 		while(position != l->sentinel && position->info < x){
@@ -61,7 +72,7 @@ int removeListWS(listWS* l, elem x){
 	if(isEmptyListWS(l))
 		return 1;
 
-	nodeWS* target = l->start;
+	node* target = l->start;
 	
 	while(target != l->sentinel && target->info <= x){
 		
@@ -90,7 +101,7 @@ int removeListWS(listWS* l, elem x){
 }
 
 int searchListWS(listWS* l, elem x){
-	nodeWS* target = l->start;
+	node* target = l->start;
 	while(target != l->sentinel && target->info <= x){
 		if(target->info == x)
 			return 1;
@@ -105,7 +116,7 @@ int isEmptyListWS(listWS* l){
 }
 
 void printListWS(listWS* l){
-	nodeWS* curr = l->start;
+	node* curr = l->start;
 	while(curr != l->sentinel) {
 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
 		curr = curr->next;

@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include "arrayBinarySearch.h"
 
+struct _arrayBS {
+	int maxSize;
+	int currSize;
+	int isSorted;
+	int vec[totalSize];
+};
+
 arrayBS* createArrayBS(int size){
 	arrayBS* newArray = malloc(sizeof(arrayBS));
 	newArray->maxSize = size;
