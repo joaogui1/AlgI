@@ -60,7 +60,7 @@ int RemoveNode(Node **n, elem x){
         aux = aux -> right;
       }
       (*n) -> info = aux -> info;
-      return (AuxParent -> left == aux) ? RemoveNode(&(AuxParent -> left), aux->info) : (&(AuxParent -> right), aux -> info);
+      return (AuxParent -> left == aux) ? RemoveNode(&(AuxParent -> left), aux->info) : RemoveNode(&(AuxParent -> right), aux -> info);
     }
   }
   if((*n) -> info > x) return RemoveNode(&((*n) -> left), x);

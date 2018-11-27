@@ -14,6 +14,6 @@ int insert(Tree *t, elem x){
   return InsertNode(&(t -> root), x);
 }
 
-int remove(Tree *t, elem x){
+int Remove(Tree *t, elem x){
   return RemoveNode(&(t -> root), x);
 }

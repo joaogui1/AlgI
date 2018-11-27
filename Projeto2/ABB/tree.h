@@ -12,6 +12,6 @@ Tree *create();
 void destroy(Tree *t);
 Node *search(Tree *t, elem x);
 int insert(Tree *t, elem x);
-int remove(Tree *t, elem x);
+int Remove(Tree *t, elem x);
 
 #endif

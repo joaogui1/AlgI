@@ -1,11 +1,15 @@
-#include <stdlib.h>
 #include "node.h"
+#include <stdio.h>
 
-Node *CreateNode(elem x, int BF){
+int max(int a, int b){
+  return (a > b)?a:b;
+}
+
+Node *CreateNode(elem x){
   Node  *ret;
   ret = calloc(1, sizeof(Node));
   ret -> info = x;
-  ret -> BalanceFactor = BF;
+  ret -> height = 1;
   return ret;
 }
 
@@ -15,6 +19,12 @@ void DestroyNode(Node *n){
   if(n -> left != NULL)  DestroyNode(n -> left);
   free(n);
 }
+
+int GetHeight(Node *n){
+  if(n == NULL) return 0;
+  return n -> height;
+}
+
 Node *SearchNode(Node *n, elem x){
   if(n == NULL || n -> info == x) return n;
   if(n -> info > x) return SearchNode(n -> left, x);
@@ -26,19 +36,30 @@ void LeftRotation(Node **n){
   Node *NewRoot, *reallocate;
   NewRoot = (*n) -> right;
   reallocate = NewRoot -> left;
+
+
   NewRoot -> left = *n;
   (*n) -> right = reallocate;
+
+  NewRoot -> height = 1 + max(GetHeight(NewRoot -> left), GetHeight(NewRoot -> right));
+  (*n) -> height = 1 + max(GetHeight((*n) -> left), GetHeight((*n) -> right));
+
   *n = NewRoot;
   return;
 }
-
 
 void RightRotation(Node **n){
   Node *NewRoot, *reallocate;
   NewRoot = (*n) -> left;
   reallocate = NewRoot -> right;
+
   NewRoot -> right = *n;
   (*n) -> left = reallocate;
+
+  (*n) -> height = 1 + max((*n) -> left -> height, (*n) -> right -> height);
+  NewRoot -> height = 1 + max(NewRoot -> left -> height, NewRoot -> right -> height);
+
+
   *n = NewRoot;
   return;
 }
@@ -53,21 +74,40 @@ void RightLeftRotation(Node **n){
   LeftRotation(n);
 }
 
-
 int InsertNode(Node **n, elem x){
+  int ret = 0, BalanceFactor;
   if(*n == NULL){
     *n = CreateNode(x);
     return *n == NULL;
   }
   if((*n) -> info == x)
     return 1;
-  if((*n) -> info > x) return InsertNode(&((*n) -> left), x);
-  if((*n) -> info < x) return InsertNode(&((*n) -> right), x);
+  if((*n) -> info > x) ret = InsertNode(&((*n) -> left), x);
+  if((*n) -> info < x) ret = InsertNode(&((*n) -> right), x);
+
+  (*n) -> height = 1 + max(GetHeight((*n) -> left), GetHeight((*n) -> right));
+  BalanceFactor = GetHeight((*n) -> left) - GetHeight((*n) -> right);
+
+  if(BalanceFactor > 1 && x < (*n) -> left -> info)
+    RightRotation(n);
+
+  else if(BalanceFactor < -1 && x > (*n) -> right -> info){
+    printf("before rotation\n");
+    LeftRotation(n);
+    printf("after rotation\n");
+  }
+
+  // else if(BalanceFactor > 1 && x > (*n) -> left -> info)
+  //   LeftRightRotation(n);
+  //
+  // else if(BalanceFactor < -1 && x < (*n) -> right -> info)
+  //   RightLeftRotation(n);
+
+  return ret;
 }
 
 int RemoveNode(Node **n, elem x){
   if(*n == NULL)  return 1;
-
   int children = 0;
   Node *aux, *AuxParent;
   if((*n)->info == x){
@@ -93,7 +133,8 @@ int RemoveNode(Node **n, elem x){
         aux = aux -> right;
       }
       (*n) -> info = aux -> info;
-      return (AuxParent -> left == aux) ? RemoveNode(&(AuxParent -> left), aux->info) : (&(AuxParent -> right), aux -> info);
+      printf("%c\n", "rl"[(AuxParent -> left == aux)]);
+      return (AuxParent -> left == aux) ? RemoveNode(&(AuxParent -> left), aux->info) : RemoveNode(&(AuxParent -> right), aux -> info);
     }
   }
   if((*n) -> info > x) return RemoveNode(&((*n) -> left), x);
