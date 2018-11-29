@@ -15,5 +15,5 @@ Node *insert(Tree *t, elem x){
 }
 
 Node *Remove(Tree *t, elem x){
-  return RemoveNode(t -> root, x);
+  return t -> root = RemoveNode(t -> root, x);
 }

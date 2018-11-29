@@ -13,14 +13,12 @@ int main(){
   int n, q, aux;
   t = create();
   scanf("%d %d", &n, &q);
-  printf("inseriu %p\n", t -> root);
   for(int i = 0; i < n; ++i){
     scanf("%d", &aux);
     insert(t, aux);
-    printf("ok\n");
   }
 
-  printf("%d\n", t -> root -> info);
+  in_order(t -> root);
   for(int i = 0; i < q; ++i){
     scanf("%d", &aux);
     Remove(t, aux);

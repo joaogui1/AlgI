@@ -74,23 +74,22 @@ Node *RightLeftRotation(Node *n){
 
 Node *BringBalance(Node *n){
   int balance = GetBalance(n);
-
   if(balance >= 0)
     return GetBalance(n -> left) < 0 ? n = LeftRightRotation(n) : RightRotation(n);
   else
-    return GetBalance(n -> right) < 0 ? n = RightLeftRotation(n) : LeftRotation(n);
+    return GetBalance(n -> right) > 0 ? n = RightLeftRotation(n) : LeftRotation(n);
 }
 
 Node *InsertNode(Node *n, elem x){
   int BalanceFactor;
   if(n == NULL) n = CreateNode(x);
-  else if(n -> info > x) n -> left = InsertNode(n -> left, x);
-  else if(n -> info < x) n -> right = InsertNode(n -> right, x);
+  else if(n -> info > x)  n -> left = InsertNode(n -> left, x);
+  else if(n -> info < x)  n -> right = InsertNode(n -> right, x);
   else  return n;
 
   n -> height = 1 + max(GetHeight(n -> left), GetHeight(n -> right));
   BalanceFactor = GetBalance(n);
-  if(abs(BalanceFactor) > 1)  return BringBalance(n);
+  if(abs(BalanceFactor) > 1)  return  BringBalance(n);
 
   return n;
 }
@@ -101,15 +100,15 @@ Node *RemoveNode(Node *n, elem x){
   Node *aux, *AuxParent;
 
   if(n -> info > x) n -> left = RemoveNode(n -> left, x);
-  if(n -> info < x) n -> right =  RemoveNode(n -> right, x);
-
-  if(n->info == x){
+  else if(n -> info < x) n -> right =  RemoveNode(n -> right, x);
+  else if(n->info == x){
     if(n -> left != NULL)  ++children;
     if(n -> right != NULL)  ++children;
 
     if(children == 0){
       free(n);
       n = NULL;
+      return n;
     }
     else if(children == 1){
       aux = (n -> left != NULL) ? n -> left : n -> right;;
@@ -128,13 +127,9 @@ Node *RemoveNode(Node *n, elem x){
 
   }
 
-  if(n == NULL)  return n;
-
-  n -> height = 1 + (GetHeight(n -> left), GetHeight(n -> right));
-
+  n -> height = 1 + max(GetHeight(n -> left), GetHeight(n -> right));
   int   BalanceFactor = GetBalance(n);
   if(abs(BalanceFactor) > 1)  return BringBalance(n);
-
 
   return n;
 }
