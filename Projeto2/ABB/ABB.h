@@ -1,8 +1,7 @@
 #ifndef TREE_H
 #define TREE_H
-#include <stdlib.h>
 
-#define elem int
+typedef elem int;
 
 typedef struct nodeABB{
   elem info;

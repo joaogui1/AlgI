@@ -1,8 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#define elem int
-#include <stdlib.h>
+typedef elem int;
 
 typedef struct nodeAVL{
   elem info;
