@@ -32,22 +32,25 @@ Node *SearchNodeABB(Node *n, elem x){
   return NULL;
 }
 
-Node *InsertNodeABB(Node *n, elem x){
-  int BalanceFactor;
+Node *InsertNodeABB(Node *n, elem x, int *erro){
   if(n == NULL) n = CreateNodeABB(x);
-  else if(n->info > x)  n->left = InsertNodeABB(n->left, x);
-  else if(n->info < x)  n->right = InsertNodeABB(n->right, x);
+  else if(n->info > x)  n->left = InsertNodeABB(n->left, x, erro);
+  else if(n->info < x)  n->right = InsertNodeABB(n->right, x, erro);
+  else *erro = 1;
 
   return n;
 }
 
-Node *RemoveNodeABB(Node *n, elem x){
-  if(n == NULL)  return NULL;
+Node *RemoveNodeABB(Node *n, elem x, int *erro){
+  if(n == NULL){
+    *erro = 1;
+    return NULL;
+  }
   int children = 0;
   Node *aux, *AuxParent;
 
-  if(n->info > x) n->left = RemoveNodeABB(n->left, x);
-  else if(n->info < x) n->right =  RemoveNodeABB(n->right, x);
+  if(n->info > x) n->left = RemoveNodeABB(n->left, x, erro);
+  else if(n->info < x) n->right =  RemoveNodeABB(n->right, x, erro);
   else if(n->info == x){
     if(n->left != NULL)  ++children;
     if(n->right != NULL)  ++children;
@@ -69,7 +72,7 @@ Node *RemoveNodeABB(Node *n, elem x){
       }
 
       n->info = aux->info;
-      n->left = RemoveNodeABB(n->left, n->info);
+      n->left = RemoveNodeABB(n->left, n->info, erro);
     }
 
   }
@@ -93,11 +96,13 @@ int searchABB(ABB *t, elem x){
 }
 
 int insertABB(ABB *t, elem x){
-  t->root = InsertNodeABB(t->root, x);
-  return 0;
+  int erro = 0;
+  t->root = InsertNodeABB(t->root, x, &erro);
+  return erro;
 }
 
 int RemoveABB(ABB *t, elem x){
-  t->root = RemoveNodeABB(t->root, x);
-  return 0;
+  int erro = 0;
+  t->root = RemoveNodeABB(t->root, x, &erro);
+  return erro;
 }

@@ -91,13 +91,15 @@ Node *BringBalance(Node *n){
     return GetBalance(n->right) > 0 ? n = RightLeftRotation(n) : LeftRotation(n);
 }
 
-Node *InsertNodeAVL(Node *n, elem x){
+Node *InsertNodeAVL(Node *n, elem x, int *erro){
   int BalanceFactor;
   if(n == NULL) n = CreateNodeAVL(x);
-  else if(n->info > x)  n->left = InsertNodeAVL(n->left, x);
-  else if(n->info < x)  n->right = InsertNodeAVL(n->right, x);
-  else  return n;
-
+  else if(n->info > x)  n->left = InsertNodeAVL(n->left, x, erro);
+  else if(n->info < x)  n->right = InsertNodeAVL(n->right, x, erro);
+  else{
+    *erro = 1;
+    return n;
+  }
   n->height = 1 + max(GetHeight(n->left), GetHeight(n->right));
   BalanceFactor = GetBalance(n);
   if(abs(BalanceFactor) > 1)  return  BringBalance(n);
@@ -109,16 +111,19 @@ int GetChildren(Node* n){
     return (n->left != NULL)  + (n->right != NULL);
 }
 
-Node *RemoveNodeAVL(Node *n, elem x){
-  if(n == NULL)  return NULL;
+Node *RemoveNodeAVL(Node *n, elem x, int *erro){
+  if(n == NULL){
+    *erro = 1;
+    return NULL;
+  }
   int children = 0;
   Node *aux, *AuxParent;
 
-  if(n->info > x) n->left = RemoveNodeAVL(n->left, x);
-  else if(n->info < x) n->right =  RemoveNodeAVL(n->right, x);
+  if(n->info > x) n->left = RemoveNodeAVL(n->left, x, erro);
+  else if(n->info < x) n->right =  RemoveNodeAVL(n->right, x, erro);
   else if(n->info == x){
     int children = GetChildren(n);
-    
+
     if(children == 0){
       free(n);
       n = NULL;
@@ -136,7 +141,7 @@ Node *RemoveNodeAVL(Node *n, elem x){
       }
 
       n->info = aux->info;
-      n->left = RemoveNodeAVL(n->left, n->info);
+      n->left = RemoveNodeAVL(n->left, n->info, erro);
     }
 
   }
@@ -164,11 +169,13 @@ int searchAVL(AVL *t, elem x){
 }
 
 int insertAVL(AVL *t, elem x){
-  t->root = InsertNodeAVL(t->root, x);
-  return (t->root != NULL);
+  int erro = 0;
+  t->root = InsertNodeAVL(t->root, x, &erro);
+  return erro;
 }
 
 int RemoveAVL(AVL *t, elem x){
-  t->root = RemoveNodeAVL(t->root, x);
-  return 0;
+  int erro = 0;
+  t->root = RemoveNodeAVL(t->root, x, &erro);
+  return erro;
 }
