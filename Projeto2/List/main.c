@@ -5,41 +5,41 @@
 #define DEBUG 0
 
 int main(int argc, const char *argv[]){
-
 	list* l = createList();
 	
-	for(int i = 0; i < 10000; i++){
-		insertList(l, i);
+	int op = 1;
+	elem info;
+
+	printf("1 - Insert element\n");
+	printf("2 - Remove element\n");
+	printf("3 - search element\n");
+	printf("4 - Print list\n");
+	printf("0 - Quit\n");
+
+	while(scanf("%d", &op), op){
+		switch(op){
+			case 1:
+				printf("Type the element to insert: ");
+				scanf("%d", &info);
+				insertList(l, info);
+				break;
+			case 2:
+				printf("Type the element to remove: ");
+				scanf("%d", &info);
+				removeList(l, info);
+				break;
+			case 3:
+				printf("Type the element to search: ");
+				scanf("%d", &info);
+				printf("%d\n", searchList(l, info));
+				break;
+			case 4:
+				printList(l);
+				break;
+		}
+		printf("New option: \n");
 	}
-	
-	printList(l);
-	
-	insertList(l, 1);
-	insertList(l, 1);
-	insertList(l, 9);
-	printList(l);
-	printf("\n");
-
-	insertList(l, 7);
-	printList(l);
-	printf("\n");
-
-	removeList(l, 1);
-	printList(l);
-	printf("\n");
-
-	removeList(l, 9);
-	printList(l);
-	printf("\n");
-
-	removeList(l, 5);
-	printList(l);
-	printf("\n");
-
-	printf("%d\n", searchList(l, 5));
-	printf("%d\n", searchList(l, 2));
 
 	destroyList(l);
-
 	return 0;
 }

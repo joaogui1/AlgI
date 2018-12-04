@@ -24,25 +24,44 @@ list* createList(){
 	return newList;
 }
 
-int insertList(list* l, elem x){
+node* createNode(elem x){
 	node* newNode = malloc(sizeof(node));
-	if(newNode == NULL)
-		return 1;
-
+	if(newNode == NULL) 
+		return NULL;
 	newNode->info = x;
 	newNode->next = NULL;
 	newNode->prev = NULL;
+	return newNode;
+}
+
+node* internalSearch(list* l, elem x){
+	node* target = l->start;
 	
+	while(target != NULL && target->info <= x){
+		if(target->info == x)
+			return target;
+		target = target->next;
+	}
+
+	return target;
+}
+
+int searchList(list* l, elem x){
+	node* n = internalSearch(l, x);
+	return (n != NULL && n->info == x);
+}
+
+int insertList(list* l, elem x){
+	node* newNode = createNode(x);
+	
+	if(newNode == NULL)
+		return 1;
+
 	if(isEmptyList(l)) {
 		l->start = newNode;
 		l->end = newNode;
 	} else {
-		node* position = l->start;
-		
-		//search position to insert
-		while(position != NULL && position->info < x){
-			position = position->next;
-		}
+		node* position = internalSearch(l, x);
 
 		//insert in the end of the list
 		if(position == NULL){
@@ -65,42 +84,26 @@ int removeList(list* l, elem x){
 	if(isEmptyList(l))
 		return 1;
 
-	node* target = l->start;
+	node* target = internalSearch(l, x);
 	
-	while(target != NULL && target->info <= x){
-		
-		//found the element
-		if(target->info == x){
-			//removing from start
-			if(target == l->start){
-				l->start = target->next;
-				if(l->start != NULL) l->start->prev = NULL;
-			} else if(target == l->end){ //removing from end
-				l->end = target->prev;
-				if(l->end != NULL) l->end->next = NULL;
-			} else{ //removing from middle
-				target->next->prev = target->prev;
-				target->prev->next = target->next;
-			}
-
-			free(target);
-			return 0;
+	if(target->info == x){
+		//removing from start
+		if(target == l->start){
+			l->start = target->next;
+			if(l->start != NULL) l->start->prev = NULL;
+		} else if(target == l->end){ //removing from end
+			l->end = target->prev;
+			if(l->end != NULL) l->end->next = NULL;
+		} else{ //removing from middle
+			target->next->prev = target->prev;
+			target->prev->next = target->next;
 		}
-		target = target->next;
+
+		free(target);
+		return 0;
 	}
 
 	return 1;
-}
-
-int searchList(list* l, elem x){
-	node* target = l->start;
-	while(target != NULL && target->info <= x){
-		if(target->info == x)
-			return 1;
-		target = target->next;
-	}
-
-	return 0;
 }
 
 int isEmptyList(list* l){
