@@ -767,7 +767,7 @@ int main(int argc, const char *argv[]){
 	}
 	printf("\n");
 
-	printf("Tabela 9: Tempo de busca crescente\n");
+	printf("Tabela 9: Tempo de busca aleatorio\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
