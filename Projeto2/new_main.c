@@ -452,17 +452,6 @@ int main(int argc, const char *argv[]){
 		++size;
 	}
 
-/* • Tabela 1: Tempo de insercao crescente oks
-*  • Tabela 2: Tempo de insercao decrescente
-*  • Tabela 3: Tempo de insercao aleatoria
-*  • Tabela 4: Tempo de remocao crescente (apos insercao crescente) oks
-*  • Tabela 5: Tempo de remocao decrescente (apos insercao crescente)
-*  • Tabela 6: Tempo de remocao aleatoria (apos insercao aleatoria)
-*  • Tabela 7: Tempo de busca (apos insercao crescente) oks
-*  • Tabela 8: Tempo de busca (apos insercao decrescente)
-*  • Tabela 9: Tempo de busca (apos insercao aleatoria)
-*/
-
 	printf("Tabela 1: Tempo de insercao crescente\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
@@ -539,7 +528,7 @@ int main(int argc, const char *argv[]){
 	}
 	printf("\n");
 
-	printf("Tabela 3: Tempo de insercao aleatorio\n");
+	printf("Tabela 3: Tempo de insercao aleatoria\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
@@ -767,7 +756,7 @@ int main(int argc, const char *argv[]){
 	}
 	printf("\n");
 
-	printf("Tabela 9: Tempo de busca aleatorio\n");
+	printf("Tabela 9: Tempo de busca aleatoria\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
