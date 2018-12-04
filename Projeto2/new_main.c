@@ -300,7 +300,7 @@ int main(int argc, const char *argv[]){
 	}
 
 	//ordem aleatoria
-	// 
+	//
 	// size = 0;
 	// for(int i = 100; i < 10001; i *= 10){
 	// 	//cada teste é feito 10 vezes
@@ -354,23 +354,23 @@ int main(int argc, const char *argv[]){
 	// 		for(int k = 0; k < i; ++k) {
 	//
 	// 			timeList = clock();
-	// 			searchList(l, k);
+	// 			searchList(l, random_order[k]);
 	// 			timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 	// 			avgListSearch[2][size] += timeList;
 	//
 	// 			timeListFreq = clock();
-	// 			searchListFreq(lf, k);
+	// 			searchListFreq(lf, random_order[k]);
 	// 			timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 	// 			avgListFreqSearch[2][size] += timeListFreq;
 	//
 	//
 	// 			timeListWS = clock();
-	// 			searchListWS(ls, k);
+	// 			searchListWS(ls, random_order[k]);
 	// 			timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 	// 			avgListWSSearch[2][size] += timeListWS;
 	//
 	// 			timeArray = clock();
-	// 			searchArrayBS(a[size], k);
+	// 			searchArrayBS(a[size], random_order[k]);
 	// 			timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 	// 			avgArraySearch[2][size] += timeArray;
 	//
@@ -388,23 +388,23 @@ int main(int argc, const char *argv[]){
 	// 		for(int k = 0; k < i; ++k) {
 	//
 	// 			timeList = clock();
-	// 			removeList(l, k);
+	// 			removeList(l, random_order[k]);
 	// 			timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 	// 			avgListRemoval[2][size] += timeList;
 	//
 	// 			timeListFreq = clock();
-	// 			removeListFreq(lf, k);
+	// 			removeListFreq(lf, random_order[k]);
 	// 			timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 	// 			avgListFreqRemoval[2][size] += timeListFreq;
 	//
 	//
 	// 			timeListWS = clock();
-	// 			removeListWS(ls, k);
+	// 			removeListWS(ls, random_order[k]);
 	// 			timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 	// 			avgListWSRemoval[2][size] += timeListWS;
 	//
 	// 			timeArray = clock();
-	// 			removeArrayBS(a[size], k);
+	// 			removeArrayBS(a[size], random_order[k]);
 	// 			timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 	// 			avgArrayRemoval[2][size] += timeArray;
 	//
