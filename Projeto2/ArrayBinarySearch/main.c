@@ -6,21 +6,13 @@
 
 int main(int argc, const char *argv[]){
 	arrayBS* abs = createArrayBS(10);
-	for(int i = 2; i < 7; i++){
+	for(int i = 100001; i > 1; i--){
 		insertArrayBS(abs, i);
 	}
-
-	insertArrayBS(abs, 1);
-	printArrayBS(abs);
-	
-	insertArrayBS(abs, 10);
-	printArrayBS(abs);
-
-	insertArrayBS(abs, 8);
-	printArrayBS(abs);
-
-	destroyArrayBS(abs);insertArrayBS(abs, 10);
-	printArrayBS(abs);
+	for(int i = 100001; i > 1; i--){
+		searchArrayBS(abs, i);
+	}
+	printf("ok\n");
 	
 	return 0;
 }

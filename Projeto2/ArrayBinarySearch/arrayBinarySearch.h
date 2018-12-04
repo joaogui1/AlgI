@@ -1,7 +1,7 @@
 #ifndef ARRAYBS_H
 #define ARRAYBS_H	
 
-#define totalSize 100005
+#define totalSize 101005
 
 typedef int elem;
 typedef struct _arrayBS arrayBS;

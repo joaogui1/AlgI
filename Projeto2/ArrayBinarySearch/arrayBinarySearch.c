@@ -51,13 +51,12 @@ int removeArrayBS(arrayBS* abs, elem x){
 }
 
 int searchArrayBS(arrayBS* abs, elem x){
-	if(abs == NULL)
-		return -1;
+	if(abs == NULL)	return -1;
 
 	int left = 0, rigth = abs->currSize-1, mid;
 
 	while(left <= rigth){
-		mid = (left+rigth) / 2;
+		mid = (left+rigth+1) / 2;
 		
 		if(abs->vec[mid] < x)
 			left = mid + 1;

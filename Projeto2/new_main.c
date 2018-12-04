@@ -25,18 +25,17 @@ int main(int argc, const char *argv[]){
 	double avgListRemoval[3][4] = {0}, avgArrayRemoval[3][4] = {0}, avgListFreqRemoval[3][4] = {0}, avgListWSRemoval[3][4] = {0};
 	double avgABBInsertion[3][4] = {0}, avgAVLInsertion[3][4] = {0};
 	double avgListInsertion[3][4] = {0}, avgArrayInsertion[3][4] = {0}, avgListFreqInsertion[3][4] = {0}, avgListWSInsertion[3][4] = {0};
-
+	int n = 10001;
 	int size = 100;
+	
 	for(int i = 0; i < 4; i++){
 		a[i] = createArrayBS(size);
 		size *= 10;
 	}
 
 	//ordem crescente
-
-	//valores de n
 	size = 0;
-	for(int i = 100; i < 10001; i *= 10){
+	for(int i = 100; i < n; i *= 10){
 		//cada teste é feito 10 vezes
 		for(int j = 0; j < 10; ++j){
 
@@ -165,12 +164,9 @@ int main(int argc, const char *argv[]){
 		++size;
 	}
 
-
-
 	//ordem decrescente
-
 	size = 0;
-	for(int i = 100; i < 10001; i *= 10){
+	for(int i = 100; i < n; i *= 10){
 		//cada teste é feito 10 vezes
 		for(int j = 0; j < 10; ++j){
 
@@ -449,86 +445,83 @@ int main(int argc, const char *argv[]){
 *  • Tabela 9: Tempo de busca (apos insercao aleatoria)
 */
 
+	printf("Tabela 1: Tempo de insercao crescente\n");
+	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
+	printf("BB");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgArrayInsertion[0][i]);
+	}
+	printf("\n");
 
+	printf("LO");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListInsertion[0][i]);
+	}
+	printf("\n");
 
+	printf("LOS");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListWSInsertion[0][i]);
+	}
+	printf("\n");
 
-printf("Tabela 1: Tempo de insercao crescente\n");
-printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
-printf("BB");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgArrayInsertion[0][i]);
-}
-printf("\n");
+	printf("LFREQ");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListFreqInsertion[0][i]);
+	}
+	printf("\n");
 
-printf("LO");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListInsertion[0][i]);
-}
-printf("\n");
+	printf("Tabela 4: Tempo de remocao crescente\n");
+	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
+	printf("BB");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgArrayRemoval[0][i]);
+	}
+	printf("\n");
 
-printf("LOS");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListWSInsertion[0][i]);
-}
-printf("\n");
+	printf("LO");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListRemoval[0][i]);
+	}
+	printf("\n");
 
-printf("LFREQ");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListFreqInsertion[0][i]);
-}
-printf("\n");
+	printf("LOS");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListWSRemoval[0][i]);
+	}
+	printf("\n");
 
-printf("Tabela 4: Tempo de remocao crescente\n");
-printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
-printf("BB");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgArrayRemoval[0][i]);
-}
-printf("\n");
+	printf("LFREQ");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListFreqRemoval[0][i]);
+	}
+	printf("\n");
 
-printf("LO");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListRemoval[0][i]);
-}
-printf("\n");
+	printf("Tabela 7: Tempo de busca crescente\n");
+	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
+	printf("BB");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgArraySearch[0][i]);
+	}
+	printf("\n");
 
-printf("LOS");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListWSRemoval[0][i]);
-}
-printf("\n");
+	printf("LO");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListSearch[0][i]);
+	}
+	printf("\n");
 
-printf("LFREQ");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListFreqRemoval[0][i]);
-}
-printf("\n");
+	printf("LOS");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListWSSearch[0][i]);
+	}
+	printf("\n");
 
-printf("Tabela 7: Tempo de busca crescente\n");
-printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
-printf("BB");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgArraySearch[i]);
-}
-printf("\n");
-
-printf("LO");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListSearch[0][i]);
-}
-printf("\n");
-
-printf("LOS");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListWSSearch[0][i]);
-}
-printf("\n");
-
-printf("LFREQ");
-for(int i = 0; i < 3; ++i){
-	printf("\t%lf", avgListFreqSearch[0][i]);
-}
-printf("\n");
+	printf("LFREQ");
+	for(int i = 0; i < 4; ++i){
+		printf("\t%lf", avgListFreqSearch[0][i]);
+	}
+	printf("\n");
 
 	destroyList(l);
 	destroyListFreq(lf);

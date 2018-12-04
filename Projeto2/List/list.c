@@ -28,9 +28,11 @@ node* createNode(elem x){
 	node* newNode = malloc(sizeof(node));
 	if(newNode == NULL) 
 		return NULL;
+	
 	newNode->info = x;
 	newNode->next = NULL;
 	newNode->prev = NULL;
+	
 	return newNode;
 }
 
@@ -110,15 +112,15 @@ int isEmptyList(list* l){
 	return (l->start == NULL);
 }
 
-void printList(list* l){
-	node* curr = l->start;
-	while(curr != NULL){
-		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
-		curr = curr->next;
-	}
-	printf("\n");
-	return;
-}
+// void printList(list* l){
+// 	node* curr = l->start;
+// 	while(curr != NULL){
+// 		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
+// 		curr = curr->next;
+// 	}
+// 	printf("\n");
+// 	return;
+// }
 
 void destroyList(list* l){
 	while(!isEmptyList(l)){
