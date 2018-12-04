@@ -4,13 +4,13 @@
 #include "abbnode.h"
 
 typedef struct{
-  Node *root;
-}Tree;
+  NodeABB *root;
+}ABB;
 
-Tree *createABB();
+ABB *createABB();
 void destroyABB(ABB *t);
 NodeABB *searchABB(ABB *t, elem x);
-NodeABB insertABB(ABB *t, elem x);
-int RemoveABB(ABB *t, elem x);
+NodeABB *insertABB(ABB *t, elem x);
+NodeABB *RemoveABB(ABB *t, elem x);
 
 #endif

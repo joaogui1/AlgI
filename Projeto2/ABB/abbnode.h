@@ -6,7 +6,7 @@
 
 typedef struct nodeABB{
   elem info;
-  struct node *left, *right;
+  struct nodeABB *left, *right;
 } NodeABB;
 
 NodeABB *CreateNodeABB(elem x);

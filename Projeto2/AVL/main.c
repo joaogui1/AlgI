@@ -1,7 +1,7 @@
-#include "tree.h"
+#include "AVL.h"
 #include <stdio.h>
 
-void in_order(Node *n){
+void in_order(NodeAVL *n){
   if(n == NULL) return;
   in_order(n -> left);
   printf("%d %d\n", n -> info, n -> height);
@@ -9,21 +9,21 @@ void in_order(Node *n){
 }
 
 int main(){
-  Tree *t;
+  AVL *t;
   int n, q, aux;
-  t = create();
+  t = createAVL();
   scanf("%d %d", &n, &q);
   for(int i = 0; i < n; ++i){
     scanf("%d", &aux);
-    insert(t, aux);
+    insertAVL(t, aux);
   }
 
   in_order(t -> root);
   for(int i = 0; i < q; ++i){
     scanf("%d", &aux);
-    Remove(t, aux);
+    RemoveAVL(t, aux);
     in_order(t -> root);
     printf("\n");
   }
-
+  destroyAVL(t);
 }
