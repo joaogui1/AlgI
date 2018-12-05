@@ -145,7 +145,6 @@ int main(int argc, const char *argv[]){
 				avgAVLRemoval[0][size] += timeAVL;
 			}
 		}
-
 		avgListSearch[0][size] /= 10.0;
 		avgArraySearch[0][size] /= 10.0;
 		avgListWSSearch[0][size] /= 10.0;
@@ -169,7 +168,6 @@ int main(int argc, const char *argv[]){
 	for(int i = 100; i < n; i *= 10){
 		//cada teste é feito 10 vezes
 		for(int j = 0; j < 10; ++j){
-
 			//inserção de cada numero
 			for(int k = i - 1; k > -1; --k) {
 
@@ -356,7 +354,6 @@ int main(int argc, const char *argv[]){
 					random_order[k] = tmp;
 					++step;
 				}
-
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
@@ -406,11 +403,11 @@ int main(int argc, const char *argv[]){
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListRemoval[2][size] += timeList;
 
+				// searchListFreq(lf, random_order[k]);
 				timeListFreq = clock();
 				removeListFreq(lf, random_order[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqRemoval[2][size] += timeListFreq;
-
 
 				timeListWS = clock();
 				removeListWS(ls, random_order[k]);
@@ -426,7 +423,6 @@ int main(int argc, const char *argv[]){
 				insertABB(bst, random_order[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBRemoval[2][size] += timeABB;
-
 				timeAVL = clock();
 				insertAVL(bbst, random_order[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
@@ -488,7 +484,7 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqInsertion[0][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
 	printf("Tabela 2: Tempo de insercao decrescente\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
@@ -526,7 +522,7 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqInsertion[1][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
 	printf("Tabela 3: Tempo de insercao aleatoria\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
@@ -564,9 +560,9 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqInsertion[2][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
-	printf("Tabela 4: Tempo de remocao crescente\n");
+	printf("Tabela 4: Tempo de remocao crescente (apos insercao crescente)\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
@@ -602,9 +598,9 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqRemoval[0][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
-	printf("Tabela 5: Tempo de remocao decrescente\n");
+	printf("Tabela 5: Tempo de remocao decrescente (apos insercao crescente)\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
@@ -640,9 +636,9 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqRemoval[1][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
-	printf("Tabela 6: Tempo de remocao aleatoria\n");
+	printf("Tabela 6: Tempo de remocao aleatoria (apos insercao aleatoria)\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
@@ -678,9 +674,9 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqRemoval[2][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
-	printf("Tabela 7: Tempo de busca crescente\n");
+	printf("Tabela 7: Tempo de busca (apos insercao crescente)\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
@@ -716,9 +712,9 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqSearch[0][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
-	printf("Tabela 8: Tempo de busca decrescente\n");
+	printf("Tabela 8: Tempo de busca (apos insercao decrescente)\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
@@ -754,9 +750,9 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqSearch[1][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
-	printf("Tabela 9: Tempo de busca aleatoria\n");
+	printf("Tabela 9: Tempo de busca (apos insercao aleatoria)\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
 	for(int i = 0; i < 4; ++i){
@@ -792,12 +788,12 @@ int main(int argc, const char *argv[]){
 	for(int i = 0; i < 4; ++i){
 		printf("\t%lf", avgListFreqSearch[2][i]);
 	}
-	printf("\n");
+	printf("\n-\n");
 
 	destroyList(l);
 	destroyABB(bst);
 	destroyAVL(bbst);
-	// destroyListFreq(lf);
+	destroyListFreq(lf);
 	destroyListWS(ls);
 	for(int i = 0; i < 4; i++){
 		destroyArrayBS(a[i]);
