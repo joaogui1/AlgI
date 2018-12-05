@@ -15,19 +15,20 @@ struct _listWS {
 
 listWS* createListWS(){
 	listWS* newList = malloc(sizeof(listWS));
-	
+
 	if(newList == NULL) return NULL;
 
 	newList->start = NULL;
 	newList->end = NULL;
-	
+	newList->sentinel = NULL;
+
 	return newList;
 }
 
 node* internal_search(listWS* ls, elem x){
 	node* target = ls->start;
 	ls->sentinel->info = x;
-	
+
 	while(target->info < x){
 		target = target->next;
 	}
@@ -46,11 +47,11 @@ int insertListWS(listWS* ls, elem x){
 	newNode->info = x;
 	newNode->next = NULL;
 	newNode->prev = NULL;
-	
-	if(isEmptyListWS(ls)) {
+
+	if(isEmptyListWS(ls)){
 		ls->start = newNode;
 		ls->end = newNode;
-		
+
 		node* sentinelaux = malloc(sizeof(node));
 		ls->sentinel = sentinelaux;
 		ls->end->next = ls->sentinel;
@@ -67,7 +68,7 @@ int insertListWS(listWS* ls, elem x){
 		}
 		position->prev = newNode;
 	}
-	
+
 	return 0;
 }
 
@@ -111,7 +112,7 @@ void destroyListWS(listWS* ls){
 		int aux = ls->start->info;
 		removeListWS(ls, aux);
 	}
-	
+
 	if(ls != NULL) {
 		free(ls->sentinel);
 		free(ls);
