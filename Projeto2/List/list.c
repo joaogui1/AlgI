@@ -14,31 +14,31 @@ struct _list {
 
 list* createList(){
 	list* newList = malloc(sizeof(list));
-	
+
 	if(newList == NULL)
 		return NULL;
 
 	newList->start = NULL;
 	newList->end = NULL;
-	
+
 	return newList;
 }
 
 node* createNode(elem x){
 	node* newNode = malloc(sizeof(node));
-	if(newNode == NULL) 
+	if(newNode == NULL)
 		return NULL;
-	
+
 	newNode->info = x;
 	newNode->next = NULL;
 	newNode->prev = NULL;
-	
+
 	return newNode;
 }
 
 node* internalSearch(list* l, elem x){
 	node* target = l->start;
-	
+
 	while(target != NULL && target->info <= x){
 		if(target->info == x)
 			return target;
@@ -55,7 +55,7 @@ int searchList(list* l, elem x){
 
 int insertList(list* l, elem x){
 	node* newNode = createNode(x);
-	
+
 	if(newNode == NULL)
 		return 1;
 
@@ -78,7 +78,7 @@ int insertList(list* l, elem x){
 			position->prev = newNode;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -87,8 +87,8 @@ int removeList(list* l, elem x){
 		return 1;
 
 	node* target = internalSearch(l, x);
-	
-	if(target->info == x){
+
+	if(target != NULL && target->info == x){
 		//removing from start
 		if(target == l->start){
 			l->start = target->next;

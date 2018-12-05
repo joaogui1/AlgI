@@ -401,11 +401,11 @@ int main(int argc, const char *argv[]){
 				}
 			for(int k = 0; k < i; ++k) {
 
-				// timeList = clock();
-				// removeList(l, random_order[k]);
-				// timeList = (clock() - timeList)/CLOCKS_PER_SEC;
-				// avgListRemoval[2][size] += timeList;
-				//
+				timeList = clock();
+				removeList(l, random_order[k]);
+				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
+				avgListRemoval[2][size] += timeList;
+
 				timeListFreq = clock();
 				removeListFreq(lf, random_order[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
