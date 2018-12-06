@@ -9,6 +9,6 @@ AVL *createAVL();
 void destroyAVL(AVL *t);
 int searchAVL(AVL *t, elem x);
 int insertAVL(AVL *t, elem x);
-int RemoveAVL(AVL *t, elem x);
+int removeAVL(AVL *t, elem x);
 
 #endif

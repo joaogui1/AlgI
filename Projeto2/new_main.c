@@ -10,6 +10,12 @@
 
 #define DEBUG 0
 
+void swap(int *a, int *b){
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
 int main(int argc, const char *argv[]){
 	arrayBS* a[4];
 	ABB *bst;
@@ -17,7 +23,7 @@ int main(int argc, const char *argv[]){
 	AVL *bbst;
 	listWS* ls;
 	listFreq* lf;
-	int random_order[100000], step = 1, element;
+	int random_search[100000], random_insertion[100000], random_removal[100000], element;
 	double timeList = 0, timeArray = 0, timeListFreq = 0, timeListWS = 0, timeABB = 0, timeAVL = 0;
 	double avgABBSearch[3][4] = {0}, avgAVLSearch[3][4] = {0};
 	double avgListSearch[3][4] = {0}, avgArraySearch[3][4] = {0}, avgListFreqSearch[3][4] = {0}, avgListWSSearch[3][4] = {0};
@@ -25,15 +31,37 @@ int main(int argc, const char *argv[]){
 	double avgListRemoval[3][4] = {0}, avgArrayRemoval[3][4] = {0}, avgListFreqRemoval[3][4] = {0}, avgListWSRemoval[3][4] = {0};
 	double avgABBInsertion[3][4] = {0}, avgAVLInsertion[3][4] = {0};
 	double avgListInsertion[3][4] = {0}, avgArrayInsertion[3][4] = {0}, avgListFreqInsertion[3][4] = {0}, avgListWSInsertion[3][4] = {0};
-	int n = 1001;
+	int n = 100001;
 	int size = 0;
 
 
 	// printf("crescente\n");
 	//ordem crescente
 	for(int i = 100; i < n; i *= 10){
+		printf("%d\n", i);
+		for(int j = 0; j < i; ++j)
+			random_search[j] = random_removal[j] = random_insertion[j] = j;
+		for(int j = 0; j < i - 1; ++j)
+			if(rand()&1)
+				swap(&random_insertion[j], &random_insertion[j + 1]);
+
+		for(int j = 0; j < i - 1; ++j){
+			if(rand()&1)
+				swap(&random_search[j], &random_search[j + 1]);
+			if(rand()&1)
+				random_search[j] += i;
+		}
+
+		for(int j = 0; j < i - 1; ++j){
+			if(rand()&1)
+				swap(&random_removal[j], &random_removal[j + 1]);
+			if(rand()&1)
+				random_removal[j] += i;
+		}
+
 		//cada teste é feito 10 vezes
-		for(int j = 0; j < 10; ++j){
+		for(int j = 0; j < 4; ++j){
+			printf("\tcrescente %d\n", j);
 			l = createList();
 			bst = createABB();
 			bbst = createAVL();
@@ -42,6 +70,7 @@ int main(int argc, const char *argv[]){
 			a[size] = createArrayBS(i);
 
 			//inserção de cada numero
+			printf("\t\tinsercao\n");
 			for(int k = 0; k < i; ++k) {
 
 				// printf("insercao lista %d\n", k);
@@ -82,76 +111,75 @@ int main(int argc, const char *argv[]){
 			}
 
 			// printf("buscas\n");
+			printf("\t\tbusca\n");
 			for(int k = 0; k < i; ++k) {
-				if(rand()&1)	element = k + i;
 
 				timeList = clock();
-				searchList(l, element);
+				searchList(l, random_search[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListSearch[0][size] += timeList;
 
 				timeListFreq = clock();
-				searchListFreq(lf, element);
+				searchListFreq(lf, random_search[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqSearch[0][size] += timeListFreq;
 				//
 				//
 				timeListWS = clock();
-				searchListWS(ls, element);
+				searchListWS(ls, random_search[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSSearch[0][size] += timeListWS;
 				//
 				//
 				timeArray = clock();
-				searchArrayBS(a[size], element);
+				searchArrayBS(a[size], random_search[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArraySearch[0][size] += timeArray;
 
 				timeABB = clock();
-				insertABB(bst, element);
+				searchABB(bst, random_search[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBSearch[0][size] += timeABB;
 
 				timeAVL = clock();
-				insertAVL(bbst, element);
+				searchAVL(bbst, random_search[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLSearch[0][size] += timeAVL;
 			}
 
 			// printf("Remocao\n");
+			printf("\t\tremocao\n");
 			for(int k = 0; k < i; ++k) {
-				if(rand()&1)	element = k + i;
-
 
 				timeList = clock();
-				removeList(l, element);
+				removeList(l, random_removal[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListRemoval[0][size] += timeList;
 				//
 				timeListFreq = clock();
-				removeListFreq(lf, element);
+				removeListFreq(lf, random_removal[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqRemoval[0][size] += timeListFreq;
 				//
 				//
 				timeListWS = clock();
-				removeListWS(ls, element);
+				removeListWS(ls, random_removal[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSRemoval[0][size] += timeListWS;
 				//
 				//
 				timeArray = clock();
-				removeArrayBS(a[size], element);
+				removeArrayBS(a[size], random_removal[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayRemoval[0][size] += timeArray;
 
 				timeABB = clock();
-				insertABB(bst, element);
+				removeABB(bst, random_removal[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBRemoval[0][size] += timeABB;
 
 				timeAVL = clock();
-				insertAVL(bbst, element);
+				removeAVL(bbst, random_removal[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLRemoval[0][size] += timeAVL;
 			}
@@ -177,15 +205,10 @@ int main(int argc, const char *argv[]){
 		avgListWSRemoval[0][size] /= 10.0;
 		avgListFreqRemoval[0][size] /= 10.0;
 
-		++size;
-	}
-
 	//ordem decrescente
-	// printf("decrescente\n");
-	size = 0;
-	for(int i = 100; i < n; i *= 10){
-		//cada teste é feito 10 vezes
-		for(int j = 0; j < 10; ++j){
+	//cada teste é feito 10 vezes
+		for(int j = 0; j < 4; ++j){
+			printf("\tdecrescente %d\n", j);
 			l = createList();
 			bst = createABB();
 			bbst = createAVL();
@@ -194,6 +217,7 @@ int main(int argc, const char *argv[]){
 			a[size] = createArrayBS(i);
 
 			//inserção de cada numero
+			printf("\t\tinsercao\n");
 			for(int k = i - 1; k > -1; --k) {
 
 				timeList = clock();
@@ -229,74 +253,129 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[1][size] += timeAVL;
 			}
 
-			for(int k = i - 1; k > -1; --k) {
-				if(rand()&1)	element = k + i;
+			printf("\t\tbusca\n");
+			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
-				searchList(l, element);
+				searchList(l, random_search[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListSearch[1][size] += timeList;
 
 				timeListFreq = clock();
-				searchListFreq(lf, element);
+				searchListFreq(lf, random_search[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqSearch[1][size] += timeListFreq;
 
 
 				timeListWS = clock();
-				searchListWS(ls, element);
+				searchListWS(ls, random_search[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSSearch[1][size] += timeListWS;
 
 
 				timeArray = clock();
-				searchArrayBS(a[size], element);
+				searchArrayBS(a[size], random_search[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArraySearch[1][size] += timeArray;
 
 				timeABB = clock();
-				insertABB(bst, element);
+				searchABB(bst, random_search[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBSearch[1][size] += timeABB;
 
 				timeAVL = clock();
-				insertAVL(bbst, element);
+				searchAVL(bbst, random_search[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLSearch[1][size] += timeAVL;
 			}
 
+
+
+			destroyList(l);
+			destroyABB(bst);
+			destroyAVL(bbst);
+			destroyListFreq(lf);
+			destroyListWS(ls);
+			destroyArrayBS(a[size]);
+
+			l = createList();
+			bst = createABB();
+			bbst = createAVL();
+			ls = createListWS();
+			lf = createListFreq();
+			a[size] = createArrayBS(i);
+
+			for(int k = 0; k < i; ++k) {
+
+				// printf("insercao lista %d\n", k);
+				timeList = clock();
+				insertList(l, k);
+				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
+				avgListInsertion[0][size] += timeList;
+				//
+				// printf("insercao listafreq %d\n", k);
+				timeListFreq = clock();
+				insertListFreq(lf, k);
+				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
+				avgListFreqInsertion[0][size] += timeListFreq;
+				//
+				// printf("insercao listas sentinela %d %p\n", k, ls);
+				timeListWS = clock();
+				insertListWS(ls, k);
+				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
+				avgListWSInsertion[0][size] += timeListWS;
+
+				// printf("insercao busca binaria%d\n", k);
+				timeArray = clock();
+				insertArrayBS(a[size], k);
+				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
+				avgArrayInsertion[0][size] += timeArray;
+
+				// printf("insercao ABB %d\n", k);
+				timeABB = clock();
+				insertABB(bst, k);
+				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
+				avgABBInsertion[0][size] += timeABB;
+
+				// printf("insercao AVL %d %d\n", k, i);
+				timeAVL = clock();
+				insertAVL(bbst, k);
+				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
+				avgAVLInsertion[0][size] += timeAVL;
+			}
+
+			printf("\t\tremocao\n");
 			for(int k = i - 1; k > -1; --k) {
-				if(rand()&1)	element = k + i;
 
 				timeList = clock();
-				removeList(l, element);
+				removeList(l, random_removal[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListRemoval[1][size] += timeList;
 
 				timeListFreq = clock();
-				removeListFreq(lf, element);
+				removeListFreq(lf, random_removal[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqRemoval[1][size] += timeListFreq;
 
 
 				timeListWS = clock();
-				removeListWS(ls, element);
+				removeListWS(ls, random_removal[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSRemoval[1][size] += timeListWS;
 
 
 				timeArray = clock();
-				removeArrayBS(a[size], element);
+				removeArrayBS(a[size], random_removal[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayRemoval[1][size] += timeArray;
 
 				timeABB = clock();
-				insertABB(bst, element);
+				removeABB(bst, random_removal[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBRemoval[1][size] += timeABB;
 
 				timeAVL = clock();
-				insertAVL(bbst, element);
+				removeAVL(bbst, random_removal[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLRemoval[1][size] += timeAVL;
 			}
@@ -323,16 +402,10 @@ int main(int argc, const char *argv[]){
 		avgListWSRemoval[1][size] /= 10.0;
 		avgListFreqRemoval[1][size] /= 10.0;
 
-		++size;
-	}
-	// printf("aleatoria\n");
-
 	//ordem aleatoria
-
-	size = 0;
-	for(int i = 100; i < n; i *= 10){
-		//cada teste é feito 10 vezes
-		for(int j = 0; j < 10; ++j){
+	//cada teste é feito 10 vezes
+		for(int j = 0; j < 4; ++j){
+			printf("\taleatoria %d\n", j);
 
 			l = createList();
 			bst = createABB();
@@ -341,132 +414,109 @@ int main(int argc, const char *argv[]){
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
 
-
-			step = 1;
-			for(int k = 0; k < i; ++k)	random_order[k] = k;
-			for(int k = 0; k < i; ++k)
-				if(rand()&1){
-					int tmp = random_order[(k + step)%i];
-					random_order[(k + step)%i] = random_order[k];
-					random_order[k] = tmp;
-					++step;
-				}
-
 			//inserção de cada numero
+			printf("\t\tinsercao\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
-				insertList(l, random_order[k]);
+				insertList(l, random_insertion[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListInsertion[2][size] += timeList;
 
 				timeListFreq = clock();
-				insertListFreq(lf, random_order[k]);
+				insertListFreq(lf, random_insertion[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqInsertion[2][size] += timeListFreq;
 
 
 				timeListWS = clock();
-				insertListWS(ls, random_order[k]);
+				insertListWS(ls, random_insertion[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSInsertion[2][size] += timeListWS;
 
 
 				timeArray = clock();
-				insertArrayBS(a[size], random_order[k]);
+				insertArrayBS(a[size], random_insertion[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayInsertion[2][size] += timeArray;
 
 				timeABB = clock();
-				insertABB(bst, random_order[k]);
+				insertABB(bst, random_insertion[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBInsertion[2][size] += timeABB;
 
 				timeAVL = clock();
-				insertAVL(bbst, random_order[k]);
+				insertAVL(bbst, random_insertion[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLInsertion[2][size] += timeAVL;
 			}
 
-			step = 1;
-			for(int k = 0; k < i; ++k)
-				if(rand()&1){
-					int tmp = random_order[(k + step)%i];
-					random_order[(k + step)%i] = random_order[k];
-					random_order[k] = tmp + i; //becomes an invalid search
-					++step;
-				}
+			printf("\t\tbusca\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
-				searchList(l, random_order[k]);
+				searchList(l, random_search[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListSearch[2][size] += timeList;
 
 				timeListFreq = clock();
-				searchListFreq(lf, random_order[k]);
+				searchListFreq(lf, random_search[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqSearch[2][size] += timeListFreq;
 
 
 				timeListWS = clock();
-				searchListWS(ls, random_order[k]);
+				searchListWS(ls, random_search[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSSearch[2][size] += timeListWS;
 
 				timeArray = clock();
-				searchArrayBS(a[size], random_order[k]);
+				searchArrayBS(a[size], random_search[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArraySearch[2][size] += timeArray;
 
 				timeABB = clock();
-				insertABB(bst, random_order[k]);
+				searchABB(bst, random_search[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBSearch[2][size] += timeABB;
 
 				timeAVL = clock();
-				insertAVL(bbst, random_order[k]);
+				searchAVL(bbst, random_search[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLSearch[2][size] += timeAVL;
 			}
 
-			step = 1;
-			for(int k = 0; k < i; ++k)
-				if(rand()&1){
-					int tmp = random_order[(k + step)%i];
-					random_order[(k + step)%i] = random_order[k];
-					random_order[k] = tmp + i; //becomes an invalid removal
-					++step;
-				}
+			printf("\t\tremocao\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
-				removeList(l, random_order[k]);
+				removeList(l, random_removal[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListRemoval[2][size] += timeList;
 
-				// searchListFreq(lf, random_order[k]);
+				// searchListFreq(lf, random_removal[k]);
 				timeListFreq = clock();
-				removeListFreq(lf, random_order[k]);
+				removeListFreq(lf, random_removal[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqRemoval[2][size] += timeListFreq;
 
 				timeListWS = clock();
-				removeListWS(ls, random_order[k]);
+				removeListWS(ls, random_removal[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSRemoval[2][size] += timeListWS;
 
 				timeArray = clock();
-				removeArrayBS(a[size], random_order[k]);
+				removeArrayBS(a[size], random_removal[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayRemoval[2][size] += timeArray;
 
 				timeABB = clock();
-				insertABB(bst, random_order[k]);
+				removeABB(bst, random_removal[k]);
 				timeABB = (clock() - timeABB)/CLOCKS_PER_SEC;
 				avgABBRemoval[2][size] += timeABB;
+
 				timeAVL = clock();
-				insertAVL(bbst, random_order[k]);
+				removeAVL(bbst, random_removal[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLRemoval[2][size] += timeAVL;
 			}

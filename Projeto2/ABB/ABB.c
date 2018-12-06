@@ -101,7 +101,7 @@ int insertABB(ABB *t, elem x){
   return erro;
 }
 
-int RemoveABB(ABB *t, elem x){
+int removeABB(ABB *t, elem x){
   int erro = 0;
   t->root = RemoveNodeABB(t->root, x, &erro);
   return erro;

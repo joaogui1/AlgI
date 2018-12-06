@@ -174,7 +174,7 @@ int insertAVL(AVL *t, elem x){
   return erro;
 }
 
-int RemoveAVL(AVL *t, elem x){
+int removeAVL(AVL *t, elem x){
   int erro = 0;
   t->root = RemoveNodeAVL(t->root, x, &erro);
   return erro;
