@@ -40,7 +40,7 @@ int main(int argc, const char *argv[]){
 	for(int i = 100; i < n; i *= 10){
 		printf("%d\n", i);
 		for(int j = 0; j < i; ++j)
-			random_search[j] = random_removal[j] = random_insertion[j] = (i/2 + j)%i;
+			random_removal[j] = random_insertion[j] = (i/2 + j)%i;
 
 		for(int j = 0; j < i; ++j){
 			idx1 = rand()%i;
@@ -48,13 +48,8 @@ int main(int argc, const char *argv[]){
 			swap(&random_insertion[idx1], &random_insertion[idx2]);
 		}
 
-		for(int j = 0; j < i; ++j){
-			idx1 = rand()%i;
-			idx2 = rand()%i;
-			swap(&random_search[idx1], &random_search[idx2]);
-			if(rand()&1)
-				random_search[j] += i;
-		}
+		for(int j = 0; j < i; ++j)
+			random_search[j] = (rand()%(2*i));
 
 		for(int j = 0; j < i; ++j){
 			idx1 = rand()%i;
