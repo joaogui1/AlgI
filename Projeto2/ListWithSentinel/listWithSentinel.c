@@ -15,7 +15,6 @@ struct _listWS {
 
 listWS* createListWS(){
 	listWS* newList = malloc(sizeof(listWS));
-
 	if(newList == NULL) return NULL;
 
 	newList->start = NULL;
@@ -25,6 +24,7 @@ listWS* createListWS(){
 	return newList;
 }
 
+//percorre toda lista, buscando o valor
 node* internal_search(listWS* ls, elem x){
 	node* target = ls->start;
 	ls->sentinel->info = x;
@@ -32,6 +32,7 @@ node* internal_search(listWS* ls, elem x){
 	while(target->info < x){
 		target = target->next;
 	}
+
 	return target;
 }
 
@@ -40,6 +41,7 @@ int searchListWS(listWS* ls, elem x){
 	return (internal_search(ls, x) != ls->sentinel);
 }
 
+// muda ponteiros para a inserção
 int insertListWS(listWS* ls, elem x){
 	node* newNode = malloc(sizeof(node));
 	if(newNode == NULL)	return 1;
@@ -48,6 +50,7 @@ int insertListWS(listWS* ls, elem x){
 	newNode->next = NULL;
 	newNode->prev = NULL;
 
+	//cria ponteiros na primeira inserção
 	if(isEmptyListWS(ls)){
 		ls->start = newNode;
 		ls->end = newNode;
@@ -57,11 +60,16 @@ int insertListWS(listWS* ls, elem x){
 		ls->end->next = ls->sentinel;
 		ls->sentinel->prev = ls->end;
 	} else {
+		//busca posição e insere
 		node* position = internal_search(ls, x);
 		newNode->prev = position->prev;
 		newNode->next = position;
-		if(position == ls->start) ls->start = newNode;
-		else position->prev->next = newNode;
+		
+		if(position == ls->start) 
+			ls->start = newNode;
+		else 
+			position->prev->next = newNode;
+		
 		if(position == ls->sentinel){
 			newNode->next = ls->sentinel;
 			ls->end = newNode;
@@ -78,13 +86,13 @@ int removeListWS(listWS* ls, elem x){
 	node* target = internal_search(ls, x);
 	if(target == ls->sentinel) return 1;
 
-	if(target == ls->start){
+	if(target == ls->start){ //removendo do inicio
 		ls->start = target->next;
 		ls->start->prev = NULL;
-	} else if(target == ls->end){ //removing from end
+	} else if(target == ls->end){ //removendo do final
 		ls->end = target->prev;
 		ls->end->next = ls->sentinel;
-	} else{ //removing from middle
+	} else{ //removendo do meio
 		target->next->prev = target->prev;
 		target->prev->next = target->next;
 	}
@@ -100,7 +108,7 @@ int isEmptyListWS(listWS* ls){
 void printListWS(listWS* ls){
 	node* curr = ls->start;
 	while(curr != ls->sentinel) {
-		printf("%d [%p] [%p] [%p]\n", curr->info, curr, curr->prev, curr->next);
+		printf("%d\n", curr->info);
 		curr = curr->next;
 	}
 	printf("\n");
@@ -108,11 +116,13 @@ void printListWS(listWS* ls){
 }
 
 void destroyListWS(listWS* ls){
+	//remove todos os elementos
 	while(!isEmptyListWS(ls)){
 		int aux = ls->start->info;
 		removeListWS(ls, aux);
 	}
 
+	//libera memoria restante
 	if(ls != NULL) {
 		free(ls->sentinel);
 		free(ls);

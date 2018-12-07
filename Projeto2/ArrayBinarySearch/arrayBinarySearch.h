@@ -44,7 +44,7 @@ int isFullArrayBS(arrayBS* abs);
 /*Parâmetros: arrayBS* - ponteiro para a struct*/
 void printArrayBS(arrayBS* abs);
 
-/*	    		Libera memória alocada		*/
+/*	    		Libera memória alocada		   */
 /*Parâmetros: arrayBS* - ponteiro para a struct*/
 void destroyArrayBS(arrayBS* abs);
 
