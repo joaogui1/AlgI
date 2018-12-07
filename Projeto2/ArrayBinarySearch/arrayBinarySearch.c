@@ -19,9 +19,12 @@ int insertArrayBS(arrayBS* abs, elem x) {
 	if(isFullArrayBS(abs)) 
 		return 1;
 	
+	//procura posição para inserir
 	int pos = 0;
-	while(pos < abs->currSize && abs->vec[pos] < x)	pos++;
+	while(pos < abs->currSize && abs->vec[pos] < x)	
+		pos++;
 	
+	//shift do vetor para inserir na posição correta
 	for(int i = abs->currSize; i > pos; i--){
 		abs->vec[i] = abs->vec[i-1]; 
 	}
@@ -33,15 +36,14 @@ int insertArrayBS(arrayBS* abs, elem x) {
 }
 
 int removeArrayBS(arrayBS* abs, elem x){
-	if (abs == NULL)
-		return 1;
+	if (abs == NULL) return 1;
 	
+	//busca elemento para remover
 	int pos = searchArrayBS(abs, x);
-	if(!pos) 
-		return 1;
-	
+	if(pos == 0) return 1;
 	pos--;
-
+	
+	//remove elemento e faz shift do resto do vetor
 	abs->currSize--;
 	for(int j = pos; j < abs->currSize; j++){
 		abs->vec[j] = abs->vec[j+1];
@@ -53,6 +55,7 @@ int removeArrayBS(arrayBS* abs, elem x){
 int searchArrayBS(arrayBS* abs, elem x){
 	if(abs == NULL)	return -1;
 
+	//busca binaria no vetor
 	int left = 0, rigth = abs->currSize-1, mid;
 
 	while(left <= rigth){
@@ -85,6 +88,5 @@ void printArrayBS(arrayBS* abs){
 }
 
 void destroyArrayBS(arrayBS* abs){
-	if(abs != NULL)
-		free(abs);
+	if(abs != NULL) free(abs);
 }
