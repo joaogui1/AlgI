@@ -27,6 +27,7 @@ listWS* createListWS(){
 //percorre toda lista, buscando o valor
 node* internal_search(listWS* ls, elem x){
 	node* target = ls->start;
+	//valor do sentinela é o que está sendo buscado
 	ls->sentinel->info = x;
 
 	while(target->info < x){
@@ -38,6 +39,7 @@ node* internal_search(listWS* ls, elem x){
 
 int searchListWS(listWS* ls, elem x){
 	if(ls == NULL) return 0;
+	//se o valor estiver no sentinela, não foi encontrado
 	return (internal_search(ls, x) != ls->sentinel);
 }
 
@@ -84,6 +86,7 @@ int removeListWS(listWS* ls, elem x){
 	if(isEmptyListWS(ls)) return 1;
 
 	node* target = internal_search(ls, x);
+	//se valor estiver no sentila, não foi encontrado
 	if(target == ls->sentinel) return 1;
 
 	if(target == ls->start){ //removendo do inicio
