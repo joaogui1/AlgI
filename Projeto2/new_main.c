@@ -23,7 +23,7 @@ int main(int argc, const char *argv[]){
 	AVL *bbst;
 	listWS* ls;
 	listFreq* lf;
-	int random_search[100000], random_insertion[100000], random_removal[100000], element;
+	int random_search[100000], random_insertion[100000], random_removal[100000], idx1, idx2;
 	double timeList = 0, timeArray = 0, timeListFreq = 0, timeListWS = 0, timeABB = 0, timeAVL = 0;
 	double avgABBSearch[3][4] = {0}, avgAVLSearch[3][4] = {0};
 	double avgListSearch[3][4] = {0}, avgArraySearch[3][4] = {0}, avgListFreqSearch[3][4] = {0}, avgListWSSearch[3][4] = {0};
@@ -31,7 +31,7 @@ int main(int argc, const char *argv[]){
 	double avgListRemoval[3][4] = {0}, avgArrayRemoval[3][4] = {0}, avgListFreqRemoval[3][4] = {0}, avgListWSRemoval[3][4] = {0};
 	double avgABBInsertion[3][4] = {0}, avgAVLInsertion[3][4] = {0};
 	double avgListInsertion[3][4] = {0}, avgArrayInsertion[3][4] = {0}, avgListFreqInsertion[3][4] = {0}, avgListWSInsertion[3][4] = {0};
-	int n = 100001;
+	int n = 10001;
 	int size = 0;
 
 
@@ -40,21 +40,26 @@ int main(int argc, const char *argv[]){
 	for(int i = 100; i < n; i *= 10){
 		printf("%d\n", i);
 		for(int j = 0; j < i; ++j)
-			random_search[j] = random_removal[j] = random_insertion[j] = j;
-		for(int j = 0; j < i - 1; ++j)
-			if(rand()&1)
-				swap(&random_insertion[j], &random_insertion[j + 1]);
+			random_search[j] = random_removal[j] = random_insertion[j] = (i/2 + j)%i;
 
-		for(int j = 0; j < i - 1; ++j){
-			if(rand()&1)
-				swap(&random_search[j], &random_search[j + 1]);
+		for(int j = 0; j < i; ++j){
+			idx1 = rand()%i;
+			idx2 = rand()%i;
+			swap(&random_insertion[idx1], &random_insertion[idx2]);
+		}
+
+		for(int j = 0; j < i; ++j){
+			idx1 = rand()%i;
+			idx2 = rand()%i;
+			swap(&random_search[idx1], &random_search[idx2]);
 			if(rand()&1)
 				random_search[j] += i;
 		}
 
-		for(int j = 0; j < i - 1; ++j){
-			if(rand()&1)
-				swap(&random_removal[j], &random_removal[j + 1]);
+		for(int j = 0; j < i; ++j){
+			idx1 = rand()%i;
+			idx2 = rand()%i;
+			swap(&random_removal[idx1], &random_removal[idx2]);
 			if(rand()&1)
 				random_removal[j] += i;
 		}
@@ -190,20 +195,20 @@ int main(int argc, const char *argv[]){
 			destroyListWS(ls);
 			destroyArrayBS(a[size]);
 		}
-		avgListSearch[0][size] /= 10.0;
-		avgArraySearch[0][size] /= 10.0;
-		avgListWSSearch[0][size] /= 10.0;
-		avgListFreqSearch[0][size] /= 10.0;
+		avgListSearch[0][size] /= 4.0;
+		avgArraySearch[0][size] /= 4.0;
+		avgListWSSearch[0][size] /= 4.0;
+		avgListFreqSearch[0][size] /= 4.0;
 
-		avgListInsertion[0][size] /= 10.0;
-		avgArrayInsertion[0][size] /= 10.0;
-		avgListWSInsertion[0][size] /= 10.0;
-		avgListFreqInsertion[0][size] /= 10.0;
+		avgListInsertion[0][size] /= 4.0;
+		avgArrayInsertion[0][size] /= 4.0;
+		avgListWSInsertion[0][size] /= 4.0;
+		avgListFreqInsertion[0][size] /= 4.0;
 
-		avgListRemoval[0][size] /= 10.0;
-		avgArrayRemoval[0][size] /= 10.0;
-		avgListWSRemoval[0][size] /= 10.0;
-		avgListFreqRemoval[0][size] /= 10.0;
+		avgListRemoval[0][size] /= 4.0;
+		avgArrayRemoval[0][size] /= 4.0;
+		avgListWSRemoval[0][size] /= 4.0;
+		avgListFreqRemoval[0][size] /= 4.0;
 
 	//ordem decrescente
 	//cada teste é feito 10 vezes
@@ -387,20 +392,20 @@ int main(int argc, const char *argv[]){
 			destroyArrayBS(a[size]);
 		}
 
-		avgListSearch[1][size] /= 10.0;
-		avgArraySearch[1][size] /= 10.0;
-		avgListWSSearch[1][size] /= 10.0;
-		avgListFreqSearch[1][size] /= 10.0;
+		avgListSearch[1][size] /= 4.0;
+		avgArraySearch[1][size] /= 4.0;
+		avgListWSSearch[1][size] /= 4.0;
+		avgListFreqSearch[1][size] /= 4.0;
 
-		avgListInsertion[1][size] /= 10.0;
-		avgArrayInsertion[1][size] /= 10.0;
-		avgListWSInsertion[1][size] /= 10.0;
-		avgListFreqInsertion[1][size] /= 10.0;
+		avgListInsertion[1][size] /= 4.0;
+		avgArrayInsertion[1][size] /= 4.0;
+		avgListWSInsertion[1][size] /= 4.0;
+		avgListFreqInsertion[1][size] /= 4.0;
 
-		avgListRemoval[1][size] /= 10.0;
-		avgArrayRemoval[1][size] /= 10.0;
-		avgListWSRemoval[1][size] /= 10.0;
-		avgListFreqRemoval[1][size] /= 10.0;
+		avgListRemoval[1][size] /= 4.0;
+		avgArrayRemoval[1][size] /= 4.0;
+		avgListWSRemoval[1][size] /= 4.0;
+		avgListFreqRemoval[1][size] /= 4.0;
 
 	//ordem aleatoria
 	//cada teste é feito 10 vezes
@@ -529,20 +534,20 @@ int main(int argc, const char *argv[]){
 			destroyArrayBS(a[size]);
 		}
 
-		avgListSearch[2][size] /= 10.0;
-		avgArraySearch[2][size] /= 10.0;
-		avgListWSSearch[2][size] /= 10.0;
-		avgListFreqSearch[2][size] /= 10.0;
+		avgListSearch[2][size] /= 4.0;
+		avgArraySearch[2][size] /= 4.0;
+		avgListWSSearch[2][size] /= 4.0;
+		avgListFreqSearch[2][size] /= 4.0;
 
-		avgListInsertion[2][size] /= 10.0;
-		avgArrayInsertion[2][size] /= 10.0;
-		avgListWSInsertion[2][size] /= 10.0;
-		avgListFreqInsertion[2][size] /= 10.0;
+		avgListInsertion[2][size] /= 4.0;
+		avgArrayInsertion[2][size] /= 4.0;
+		avgListWSInsertion[2][size] /= 4.0;
+		avgListFreqInsertion[2][size] /= 4.0;
 
-		avgListRemoval[2][size] /= 10.0;
-		avgArrayRemoval[2][size] /= 10.0;
-		avgListWSRemoval[2][size] /= 10.0;
-		avgListFreqRemoval[2][size] /= 10.0;
+		avgListRemoval[2][size] /= 4.0;
+		avgArrayRemoval[2][size] /= 4.0;
+		avgListWSRemoval[2][size] /= 4.0;
+		avgListFreqRemoval[2][size] /= 4.0;
 
 
 		++size;
