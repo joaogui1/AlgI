@@ -12,8 +12,7 @@ struct _abb {
 };
 
 node *createNodeABB(elem x) {
-  node *ret;
-  ret = calloc(1, sizeof(node));
+  node *ret = malloc(sizeof(node));
   ret->left = ret->right = NULL;
   ret->info = x;
   return ret;
@@ -33,12 +32,20 @@ node *searchNodeABB(node *n, elem x) {
   return NULL;
 }
 
-node *insertNodeABB(node *n, elem x, int *erro) {
-  if(n == NULL) n = createNodeABB(x);
-  else if(n->info > x)  n->left = insertNodeABB(n->left, x, erro);
-  else if(n->info < x)  n->right = insertNodeABB(n->right, x, erro);
-  else *erro = 1;
-  return n;
+node *insertNodeABB(node **root, elem x, int *erro){
+  node **n = root;
+  while (*n != NULL) {
+    if ((*n)->info > x) {
+      n = &(*n)->left;
+    } else if((*n)->info < x) {
+      n = &(*n)->right;
+    } else {
+      *erro = 1;
+      break;
+    }
+  }
+  *n = createNodeABB(x);
+  return *root;
 }
 
 int getChildrenABB(node* n) {
@@ -102,7 +109,7 @@ int searchABB(ABB *t, elem x) {
 
 int insertABB(ABB *t, elem x) {
   int erro = 0;
-  t->root = insertNodeABB(t->root, x, &erro);
+  t->root = insertNodeABB(&(t->root), x, &erro);
   return erro;
 }
 
