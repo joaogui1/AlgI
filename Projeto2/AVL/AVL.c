@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct node {
+typedef struct _node {
   elem info;
   int height;
-  struct node *left, *right;
+  struct _node *left, *right;
 } Node;
 
 struct _avl{
@@ -20,7 +20,7 @@ int abs(int a){
   return a > 0 ? a : -a;
 }
 
-Node* CreateNodeAVL(elem x){
+Node* createNodeAVL(elem x){
   Node  *ret;
   ret = calloc(1, sizeof(Node));
   ret->info = x;
@@ -28,90 +28,90 @@ Node* CreateNodeAVL(elem x){
   return ret;
 }
 
-void DestroyNodeAVL(Node *n){
+void destroyNodeAVL(Node *n){
   if(n == NULL) return;
-  if(n->right != NULL)  DestroyNodeAVL(n->right);
-  if(n->left != NULL)  DestroyNodeAVL(n->left);
+  if(n->right != NULL)  destroyNodeAVL(n->right);
+  if(n->left != NULL)  destroyNodeAVL(n->left);
   free(n);
 }
 
-int GetHeight(Node *n){
+int getHeight(Node *n){
   if(n == NULL) return -1;
   return n->height;
 }
 
-int GetBalance(Node *n){
-  return GetHeight(n->left) - GetHeight(n->right);
+int getBalance(Node *n){
+  return getHeight(n->left) - getHeight(n->right);
 }
 
-Node *SearchNodeAVL(Node *n, elem x){
+Node *searchNodeAVL(Node *n, elem x){
   if(n == NULL || n->info == x) return n;
-  if(n->info > x) return SearchNodeAVL(n->left, x);
-  if(n->info < x) return SearchNodeAVL(n->right, x);
+  if(n->info > x) return searchNodeAVL(n->left, x);
+  if(n->info < x) return searchNodeAVL(n->right, x);
   return NULL;
 }
 
-Node *LeftRotation(Node *n){
+Node *leftRotation(Node *n){
   Node *NewRoot = n->right;
   n->right = NewRoot->left;
   NewRoot->left = n;
 
-  n->height = 1 + max(GetHeight(n->left), GetHeight(n->right));
-  NewRoot->height = 1 + max(GetHeight(NewRoot->left), GetHeight(NewRoot->right));
+  n->height = 1 + max(getHeight(n->left), getHeight(n->right));
+  NewRoot->height = 1 + max(getHeight(NewRoot->left), getHeight(NewRoot->right));
 
   return NewRoot;
 }
 
-Node *RightRotation(Node *n){
+Node *rightRotation(Node *n){
   Node *NewRoot = n->left;
   n->left = NewRoot->right;
   NewRoot->right = n;
 
-  n->height = 1 + max(GetHeight(n->left), GetHeight(n->right));
-  NewRoot->height = 1 + max(GetHeight(NewRoot->left), GetHeight(NewRoot->right));
+  n->height = 1 + max(getHeight(n->left), getHeight(n->right));
+  NewRoot->height = 1 + max(getHeight(NewRoot->left), getHeight(NewRoot->right));
 
   return NewRoot;
 }
 
-Node *LeftRightRotation(Node *n){
-  n->left = LeftRotation(n->left);
-  return RightRotation(n);
+Node *leftRightRotation(Node *n){
+  n->left = leftRotation(n->left);
+  return rightRotation(n);
 }
 
-Node *RightLeftRotation(Node *n){
-  n->right = RightRotation(n->right);
-  return LeftRotation(n);
+Node *rightLeftRotation(Node *n){
+  n->right = rightRotation(n->right);
+  return leftRotation(n);
 }
 
-Node *BringBalance(Node *n){
-  int balance = GetBalance(n);
+Node *bringBalance(Node *n){
+  int balance = getBalance(n);
   if(balance >= 0)
-    return GetBalance(n->left) < 0 ? n = LeftRightRotation(n) : RightRotation(n);
+    return getBalance(n->left) < 0 ? n = leftRightRotation(n) : rightRotation(n);
   else
-    return GetBalance(n->right) > 0 ? n = RightLeftRotation(n) : LeftRotation(n);
+    return getBalance(n->right) > 0 ? n = rightLeftRotation(n) : leftRotation(n);
 }
 
-Node *InsertNodeAVL(Node *n, elem x, int *erro){
+Node *insertNodeAVL(Node *n, elem x, int *erro){
   int BalanceFactor;
-  if(n == NULL) n = CreateNodeAVL(x);
-  else if(n->info > x)  n->left = InsertNodeAVL(n->left, x, erro);
-  else if(n->info < x)  n->right = InsertNodeAVL(n->right, x, erro);
+  if(n == NULL) n = createNodeAVL(x);
+  else if(n->info > x)  n->left = insertNodeAVL(n->left, x, erro);
+  else if(n->info < x)  n->right = insertNodeAVL(n->right, x, erro);
   else{
     *erro = 1;
     return n;
   }
-  n->height = 1 + max(GetHeight(n->left), GetHeight(n->right));
-  BalanceFactor = GetBalance(n);
-  if(abs(BalanceFactor) > 1)  return  BringBalance(n);
+  n->height = 1 + max(getHeight(n->left), getHeight(n->right));
+  BalanceFactor = getBalance(n);
+  if(abs(BalanceFactor) > 1)  return  bringBalance(n);
 
   return n;
 }
 
-int GetChildren(Node* n){
+int getChildrenAVL(Node* n){
     return (n->left != NULL)  + (n->right != NULL);
 }
 
-Node *RemoveNodeAVL(Node *n, elem x, int *erro){
+Node *removeNodeAVL(Node *n, elem x, int *erro){
   if(n == NULL){
     *erro = 1;
     return NULL;
@@ -119,10 +119,10 @@ Node *RemoveNodeAVL(Node *n, elem x, int *erro){
   int children = 0;
   Node *aux, *AuxParent;
 
-  if(n->info > x) n->left = RemoveNodeAVL(n->left, x, erro);
-  else if(n->info < x) n->right =  RemoveNodeAVL(n->right, x, erro);
+  if(n->info > x) n->left = removeNodeAVL(n->left, x, erro);
+  else if(n->info < x) n->right =  removeNodeAVL(n->right, x, erro);
   else if(n->info == x){
-    int children = GetChildren(n);
+    int children = getChildrenAVL(n);
 
     if(children == 0){
       free(n);
@@ -141,14 +141,14 @@ Node *RemoveNodeAVL(Node *n, elem x, int *erro){
       }
 
       n->info = aux->info;
-      n->left = RemoveNodeAVL(n->left, n->info, erro);
+      n->left = removeNodeAVL(n->left, n->info, erro);
     }
 
   }
 
-  n->height = 1 + max(GetHeight(n->left), GetHeight(n->right));
-  int   BalanceFactor = GetBalance(n);
-  if(abs(BalanceFactor) > 1)  return BringBalance(n);
+  n->height = 1 + max(getHeight(n->left), getHeight(n->right));
+  int   BalanceFactor = getBalance(n);
+  if(abs(BalanceFactor) > 1)  return bringBalance(n);
 
   return n;
 }
@@ -160,22 +160,22 @@ AVL *createAVL(){
 }
 
 void destroyAVL(AVL *t){
-  DestroyNodeAVL(t->root);
+  destroyNodeAVL(t->root);
 }
 
 int searchAVL(AVL *t, elem x){
-  Node* ans = SearchNodeAVL(t->root, x);
+  Node* ans = searchNodeAVL(t->root, x);
   return (ans != NULL);
 }
 
 int insertAVL(AVL *t, elem x){
   int erro = 0;
-  t->root = InsertNodeAVL(t->root, x, &erro);
+  t->root = insertNodeAVL(t->root, x, &erro);
   return erro;
 }
 
 int removeAVL(AVL *t, elem x){
   int erro = 0;
-  t->root = RemoveNodeAVL(t->root, x, &erro);
+  t->root = removeNodeAVL(t->root, x, &erro);
   return erro;
 }

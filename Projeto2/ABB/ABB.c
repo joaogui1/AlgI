@@ -12,8 +12,9 @@ struct _abb {
 };
 
 node *createNodeABB(elem x) {
-  node  *ret;
+  node *ret;
   ret = calloc(1, sizeof(node));
+  ret->left = ret->right = NULL;
   ret->info = x;
   return ret;
 }
@@ -40,7 +41,7 @@ node *insertNodeABB(node *n, elem x, int *erro) {
   return n;
 }
 
-int getChildren(node* n) {
+int getChildrenABB(node* n) {
   return (n->left != NULL) + (n->right != NULL);
 }
 
@@ -49,6 +50,7 @@ node *getGreatestLeft(node* n) {
   while(aux->right != NULL) {
     aux = aux->right;
   }
+  return aux;
 }
  
 node *removeNodeABB(node *n, elem x, int *erro){
@@ -56,13 +58,14 @@ node *removeNodeABB(node *n, elem x, int *erro){
     *erro = 1;
     return NULL;
   }
+
   int children = 0;
-  node *aux, *AuxParent;
+  node *aux;
 
   if(n->info > x) n->left = removeNodeABB(n->left, x, erro);
   else if(n->info < x) n->right =  removeNodeABB(n->right, x, erro);
   else if(n->info == x) {
-    int children = getChildren(n);
+    children = getChildrenABB(n);
 
     if(children == 0) {
       free(n);
@@ -73,7 +76,7 @@ node *removeNodeABB(node *n, elem x, int *erro){
       free(n);
       n = aux;
     } else {
-      node* aux = getGreatestLeft(n);
+      aux = getGreatestLeft(n);
       n->info = aux->info;
       n->left = removeNodeABB(n->left, n->info, erro);
     }
@@ -114,9 +117,8 @@ void abb_print_debug(node* n, int depth) {
     putchar('\n');
     return;
   }
-  int i;
   abb_print_debug(n->right, depth + 1);
-  for (i = 0; i < depth; i++) putchar('\t');
+  for (int i = 0; i < depth; i++) putchar('\t');
   printf("[%d]\n", n->info);
   abb_print_debug(n->left, depth + 1);
 }

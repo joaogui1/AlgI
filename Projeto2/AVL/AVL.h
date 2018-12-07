@@ -1,4 +1,3 @@
-//basicamente um wrapper ao redor de node
 #ifndef AVL_H
 #define AVL_H
 
