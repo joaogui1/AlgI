@@ -26,26 +26,26 @@ void destroyNodeABB(node *n) {
 }
 
 node *searchNodeABB(node *n, elem x) {
-  if(n == NULL || n->info == x) return n;
-  if(n->info > x) return searchNodeABB(n->left, x);
-  if(n->info < x) return searchNodeABB(n->right, x);
-  return NULL;
+  while(n != NULL && n->info != x){
+    if(n->info > x) n = n->left;
+    else if(n->info < x) n = n->right;
+  }
+  return n;
 }
 
-node *insertNodeABB(node **root, elem x, int *erro){
+int insertNodeABB(node **root, elem x){
   node **n = root;
-  while (*n != NULL) {
+  while (*n != NULL){
     if ((*n)->info > x) {
       n = &(*n)->left;
     } else if((*n)->info < x) {
       n = &(*n)->right;
     } else {
-      *erro = 1;
-      break;
+      return 1;
     }
   }
   *n = createNodeABB(x);
-  return *root;
+  return 0;
 }
 
 int getChildrenABB(node* n) {
@@ -59,37 +59,36 @@ node *getGreatestLeft(node* n) {
   }
   return aux;
 }
- 
-node *removeNodeABB(node *n, elem x, int *erro){
-  if(n == NULL) {
-    *erro = 1;
-    return NULL;
+
+int removeNodeABB(node **n, elem x){
+  while((*n) != NULL && (*n)->info != x){
+    if((*n)->info > x) (*n) = (*n)->left;
+    else if((*n)->info < x) (*n) = (*n)->right;
   }
 
-  int children = 0;
+  if((*n) == NULL)  return 1;
+
   node *aux;
+  int children = 0;
+  children = getChildrenABB((*n));
 
-  if(n->info > x) n->left = removeNodeABB(n->left, x, erro);
-  else if(n->info < x) n->right =  removeNodeABB(n->right, x, erro);
-  else if(n->info == x) {
-    children = getChildrenABB(n);
-
-    if(children == 0) {
-      free(n);
-      n = NULL;
-      return n;
-    } else if(children == 1) {
-      aux = (n->left != NULL) ? n->left : n->right;;
-      free(n);
-      n = aux;
-    } else {
-      aux = getGreatestLeft(n);
-      n->info = aux->info;
-      n->left = removeNodeABB(n->left, n->info, erro);
-    }
+  if(children == 0) {
+    free((*n));
+    (*n) = NULL;
+    return 0;
+  }
+  else if(children == 1) {
+    aux = ((*n)->left != NULL) ? (*n)->left : (*n)->right;;
+    free((*n));
+    (*n) = aux;
+  }
+  else {
+    aux = getGreatestLeft((*n));
+    (*n)->info = aux->info;
+    removeNodeABB(&(*n)->left, (*n)->info);
   }
 
-  return n;
+  return 0;
 }
 
 ABB *createABB() {
@@ -108,15 +107,11 @@ int searchABB(ABB *t, elem x) {
 }
 
 int insertABB(ABB *t, elem x) {
-  int erro = 0;
-  t->root = insertNodeABB(&(t->root), x, &erro);
-  return erro;
+  return insertNodeABB(&(t->root), x);
 }
 
 int removeABB(ABB *t, elem x) {
-  int erro = 0;
-  t->root = removeNodeABB(t->root, x, &erro);
-  return erro;
+  return removeNodeABB(&t->root, x);
 }
 
 void abb_print_debug(node* n, int depth) {
