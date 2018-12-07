@@ -1,5 +1,5 @@
 all:
-	gcc ABB.c main.c -o a
+	gcc BST.c main.c -o a
 
 run:
 	./a
