@@ -1,2 +1,5 @@
 all:
-	gcc AVL.c -o avl
+	gcc AVL.c main.c -o avl
+
+run:
+	./avl
