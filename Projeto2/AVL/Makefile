@@ -3,3 +3,6 @@ all:
 
 run:
 	./avl
+
+debug:
+	valgrind ./avl

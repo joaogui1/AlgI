@@ -1,8 +1,8 @@
 all:
-	gcc arrayBinarySearch.c main.c -g -o abb
+	gcc arrayBinarySearch.c main.c -g -o abs
 
 run:
-	./abb
+	./abs
 
 debug:
-	valgrind ./abb
+	valgrind ./abs

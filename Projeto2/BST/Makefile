@@ -1,5 +1,8 @@
 all:
-	gcc BST.c main.c -o a
+	gcc BST.c main.c -o bst
 
 run:
-	./a
+	./bst
+
+debug:
+	valgrind ./bst
