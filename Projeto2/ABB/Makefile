@@ -1,2 +1,5 @@
 all:
-	gcc ABB.c -o a
+	gcc ABB.c main.c -o a
+
+run:
+	./a

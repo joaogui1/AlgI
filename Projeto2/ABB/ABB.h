@@ -10,5 +10,7 @@ void destroyABB(ABB *t);
 int searchABB(ABB *t, elem x);
 int insertABB(ABB *t, elem x);
 int removeABB(ABB *t, elem x);
+void printAbb(ABB* t);
+
 
 #endif

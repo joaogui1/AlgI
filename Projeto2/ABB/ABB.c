@@ -2,107 +2,125 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node{
+typedef struct _node {
   elem info;
-  struct node *left, *right;
-} Node;
+  struct _node *left, *right;
+} node;
 
-struct _abb{
-  Node *root;
+struct _abb {
+  node *root;
 };
 
-Node *CreateNodeABB(elem x){
-  Node  *ret;
-  ret = calloc(1, sizeof(Node));
+node *createNodeABB(elem x) {
+  node  *ret;
+  ret = calloc(1, sizeof(node));
   ret->info = x;
   return ret;
 }
 
-void DestroyNodeABB(Node *n){
+void destroyNodeABB(node *n) {
   if(n == NULL) return;
-  if(n->right != NULL)  DestroyNodeABB(n->right);
-  if(n->left != NULL)  DestroyNodeABB(n->left);
+  if(n->right != NULL)  destroyNodeABB(n->right);
+  if(n->left != NULL)  destroyNodeABB(n->left);
   free(n);
 }
 
-Node *SearchNodeABB(Node *n, elem x){
+node *searchNodeABB(node *n, elem x) {
   if(n == NULL || n->info == x) return n;
-  if(n->info > x) return SearchNodeABB(n->left, x);
-  if(n->info < x) return SearchNodeABB(n->right, x);
+  if(n->info > x) return searchNodeABB(n->left, x);
+  if(n->info < x) return searchNodeABB(n->right, x);
   return NULL;
 }
 
-Node *InsertNodeABB(Node *n, elem x, int *erro){
-  if(n == NULL) n = CreateNodeABB(x);
-  else if(n->info > x)  n->left = InsertNodeABB(n->left, x, erro);
-  else if(n->info < x)  n->right = InsertNodeABB(n->right, x, erro);
+node *insertNodeABB(node *n, elem x, int *erro) {
+  if(n == NULL) n = createNodeABB(x);
+  else if(n->info > x)  n->left = insertNodeABB(n->left, x, erro);
+  else if(n->info < x)  n->right = insertNodeABB(n->right, x, erro);
   else *erro = 1;
-
   return n;
 }
 
-Node *RemoveNodeABB(Node *n, elem x, int *erro){
-  if(n == NULL){
+int getChildren(node* n) {
+  return (n->left != NULL) + (n->right != NULL);
+}
+
+node *getGreatestLeft(node* n) {
+  node* aux = n->left;
+  while(aux->right != NULL) {
+    aux = aux->right;
+  }
+}
+ 
+node *removeNodeABB(node *n, elem x, int *erro){
+  if(n == NULL) {
     *erro = 1;
     return NULL;
   }
   int children = 0;
-  Node *aux, *AuxParent;
+  node *aux, *AuxParent;
 
-  if(n->info > x) n->left = RemoveNodeABB(n->left, x, erro);
-  else if(n->info < x) n->right =  RemoveNodeABB(n->right, x, erro);
-  else if(n->info == x){
-    if(n->left != NULL)  ++children;
-    if(n->right != NULL)  ++children;
+  if(n->info > x) n->left = removeNodeABB(n->left, x, erro);
+  else if(n->info < x) n->right =  removeNodeABB(n->right, x, erro);
+  else if(n->info == x) {
+    int children = getChildren(n);
 
-    if(children == 0){
+    if(children == 0) {
       free(n);
       n = NULL;
       return n;
-    }
-    else if(children == 1){
+    } else if(children == 1) {
       aux = (n->left != NULL) ? n->left : n->right;;
       free(n);
       n = aux;
-    }
-    else{
-      aux = n->left;
-      while(aux->right != NULL){
-        aux = aux->right;
-      }
-
+    } else {
+      node* aux = getGreatestLeft(n);
       n->info = aux->info;
-      n->left = RemoveNodeABB(n->left, n->info, erro);
+      n->left = removeNodeABB(n->left, n->info, erro);
     }
-
   }
 
   return n;
 }
 
-ABB *createABB(){
+ABB *createABB() {
   ABB *ret;
   ret = calloc(1, sizeof(ABB));
   return ret;
 }
 
-void destroyABB(ABB *t){
-  DestroyNodeABB(t->root);
+void destroyABB(ABB *t) {
+  destroyNodeABB(t->root);
 }
 
-int searchABB(ABB *t, elem x){
-  Node* ans = SearchNodeABB(t->root, x);
+int searchABB(ABB *t, elem x) {
+  node* ans = searchNodeABB(t->root, x);
   return ans != NULL;
 }
 
-int insertABB(ABB *t, elem x){
+int insertABB(ABB *t, elem x) {
   int erro = 0;
-  t->root = InsertNodeABB(t->root, x, &erro);
+  t->root = insertNodeABB(t->root, x, &erro);
   return erro;
 }
 
-int removeABB(ABB *t, elem x){
+int removeABB(ABB *t, elem x) {
   int erro = 0;
-  t->root = RemoveNodeABB(t->root, x, &erro);
+  t->root = removeNodeABB(t->root, x, &erro);
   return erro;
+}
+
+void abb_print_debug(node* n, int depth) {
+  if (n == NULL) {
+    putchar('\n');
+    return;
+  }
+  int i;
+  abb_print_debug(n->right, depth + 1);
+  for (i = 0; i < depth; i++) putchar('\t');
+  printf("[%d]\n", n->info);
+  abb_print_debug(n->left, depth + 1);
+}
+
+void printAbb(ABB* t) {
+  abb_print_debug(t->root, 0);
 }
