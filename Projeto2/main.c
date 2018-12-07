@@ -31,14 +31,14 @@ int main(int argc, const char *argv[]){
 	double avgListRemoval[3][4] = {0}, avgArrayRemoval[3][4] = {0}, avgListFreqRemoval[3][4] = {0}, avgListWSRemoval[3][4] = {0};
 	double avgBSTInsertion[3][4] = {0}, avgAVLInsertion[3][4] = {0};
 	double avgListInsertion[3][4] = {0}, avgArrayInsertion[3][4] = {0}, avgListFreqInsertion[3][4] = {0}, avgListWSInsertion[3][4] = {0};
-	int n = 10001;
+	int n = 100001;
 	int size = 0;
 
 
 	// printf("crescente\n");
 	//ordem crescente
 	for(int i = 100; i < n; i *= 10){
-		printf("%d\n", i);
+		// printf("%d\n", i);
 		for(int j = 0; j < i; ++j)
 			random_removal[j] = random_insertion[j] = (i/2 + j)%i;
 
@@ -61,7 +61,7 @@ int main(int argc, const char *argv[]){
 
 		//cada teste é feito 10 vezes
 		for(int j = 0; j < 4; ++j){
-			printf("\tcrescente %d\n", j);
+			// printf("\tcrescente %d\n", j);
 			l = createList();
 			bst = createBST();
 			bbst = createAVL();
@@ -70,7 +70,7 @@ int main(int argc, const char *argv[]){
 			a[size] = createArrayBS(i);
 
 			//inserção de cada numero
-			printf("\t\tinsercao\n");
+			// printf("\t\tinsercao\n");
 			for(int k = 0; k < i; ++k) {
 
 				// printf("insercao lista %d\n", k);
@@ -111,7 +111,7 @@ int main(int argc, const char *argv[]){
 			}
 
 			// printf("buscas\n");
-			printf("\t\tbusca\n");
+			// printf("\t\tbusca\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
@@ -148,7 +148,7 @@ int main(int argc, const char *argv[]){
 			}
 
 			// printf("Remocao\n");
-			printf("\t\tremocao\n");
+			// printf("\t\tremocao\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
@@ -208,7 +208,7 @@ int main(int argc, const char *argv[]){
 	//ordem decrescente
 	//cada teste é feito 10 vezes
 		for(int j = 0; j < 4; ++j){
-			printf("\tdecrescente %d\n", j);
+			// printf("\tdecrescente %d\n", j);
 			l = createList();
 			bst = createBST();
 			bbst = createAVL();
@@ -217,7 +217,7 @@ int main(int argc, const char *argv[]){
 			a[size] = createArrayBS(i);
 
 			//inserção de cada numero
-			printf("\t\tinsercao\n");
+			// printf("\t\tinsercao\n");
 			for(int k = i - 1; k > -1; --k) {
 
 				timeList = clock();
@@ -253,7 +253,7 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[1][size] += timeAVL;
 			}
 
-			printf("\t\tbusca\n");
+			// printf("\t\tbusca\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
@@ -344,7 +344,7 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[0][size] += timeAVL;
 			}
 
-			printf("\t\tremocao\n");
+			// printf("\t\tremocao\n");
 			for(int k = i - 1; k > -1; --k) {
 
 				timeList = clock();
@@ -405,7 +405,7 @@ int main(int argc, const char *argv[]){
 	//ordem aleatoria
 	//cada teste é feito 10 vezes
 		for(int j = 0; j < 4; ++j){
-			printf("\taleatoria %d\n", j);
+			// printf("\taleatoria %d\n", j);
 
 			l = createList();
 			bst = createBST();
@@ -415,7 +415,7 @@ int main(int argc, const char *argv[]){
 			a[size] = createArrayBS(i);
 
 			//inserção de cada numero
-			printf("\t\tinsercao\n");
+			// printf("\t\tinsercao\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
@@ -451,7 +451,7 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[2][size] += timeAVL;
 			}
 
-			printf("\t\tbusca\n");
+			// printf("\t\tbusca\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
@@ -486,7 +486,7 @@ int main(int argc, const char *argv[]){
 				avgAVLSearch[2][size] += timeAVL;
 			}
 
-			printf("\t\tremocao\n");
+			// printf("\t\tremocao\n");
 			for(int k = 0; k < i; ++k) {
 
 				timeList = clock();
