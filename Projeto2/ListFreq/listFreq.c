@@ -51,7 +51,7 @@ int insertListFreq(listFreq* lf, elem x){
 	return 0;
 }
 
-node* internalSearch(listFreq* lf, elem x){
+node* internalSearchLF(listFreq* lf, elem x){
 	node* target = lf->start;
 
 	//busca sequencial, mudando valores quando encontrados
@@ -76,7 +76,7 @@ int removeListFreq(listFreq* lf, elem x){
 	if(isEmptyListFreq(lf))	return 1;
 
 	//busca elemento para remover
-	node* target = internalSearch(lf, x);
+	node* target = internalSearchLF(lf, x);
 	if(target == NULL) return 1;
 
 	if(target == lf->start){ //removendo do inicio
@@ -98,7 +98,7 @@ int removeListFreq(listFreq* lf, elem x){
 }
 
 int searchListFreq(listFreq* lf, elem x){
-	return (internalSearch(lf, x) != NULL); 
+	return (internalSearchLF(lf, x) != NULL); 
 }
 
 int isEmptyListFreq(listFreq* lf){

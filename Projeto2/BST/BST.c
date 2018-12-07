@@ -102,15 +102,15 @@ int removeNodeBST(node **n, elem x){
     return 0;
 }
 
-void internalPrint(node* n, int hight) {
+void internalPrintBST(node* n, int hight) {
     if (n == NULL) {
         putchar('\n');
         return;
     }
-    internalPrint(n->right, hight + 1);
+    internalPrintBST(n->right, hight + 1);
     for (int i = 0; i < hight; i++) putchar('\t');
     printf("[%d]\n", n->info);
-    internalPrint(n->left, hight + 1);
+    internalPrintBST(n->left, hight + 1);
 }
 
 
@@ -139,5 +139,5 @@ int removeBST(BST *t, elem x) {
 }
 
 void printBST(BST* t) {
-    internalPrint(t->root, 0);
+    internalPrintBST(t->root, 0);
 }
