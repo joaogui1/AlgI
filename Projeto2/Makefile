@@ -1,5 +1,5 @@
 all:
-	gcc List/list.c ListFreq/listFreq.c ListWithSentinel/listWithSentinel.c ArrayBinarySearch/arrayBinarySearch.c AVL/AVL.c BST/BST.c main.c -O2 -o main
+	gcc List/list.c ListFreq/listFreq.c ListWithSentinel/listWithSentinel.c ArrayBinarySearch/arrayBinarySearch.c AVL/AVL.c BST/BST.c main.c -O2 -std=c11 -o main 
 
 list:
 	gcc List/list.c -o list
@@ -22,11 +22,5 @@ bst:
 run:
 	./main
 
-runTAD $2:
-	./$2
-
 debug:
 	valgrind ./main
-
-debugTAD $2:
-	valgrind ./$2

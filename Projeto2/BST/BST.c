@@ -72,7 +72,6 @@ node *getGreatestLeft(node* n) {
     return aux;
 }
 
-
 int removeNodeBST(node **n, elem x){
 
     //busca elemento para remover

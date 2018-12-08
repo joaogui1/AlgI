@@ -31,14 +31,14 @@ int main(int argc, const char *argv[]){
 	double avgListRemoval[3][4] = {0}, avgArrayRemoval[3][4] = {0}, avgListFreqRemoval[3][4] = {0}, avgListWSRemoval[3][4] = {0};
 	double avgBSTInsertion[3][4] = {0}, avgAVLInsertion[3][4] = {0};
 	double avgListInsertion[3][4] = {0}, avgArrayInsertion[3][4] = {0}, avgListFreqInsertion[3][4] = {0}, avgListWSInsertion[3][4] = {0};
-	int n = 10001;
+	int n = 1001;
 	int size = 0;
 
 
-	// printf("crescente\n");
-	//ordem crescente
+	/*----------------------Ordem Crescente-----------------------*/
 	for(int i = 100; i < n; i *= 10){
-		printf("%d\n", i);
+
+		//gerando vetores de valores aleatórios
 		for(int j = 0; j < i; ++j)
 			random_removal[j] = random_insertion[j] = (i/2 + j)%i;
 
@@ -59,130 +59,140 @@ int main(int argc, const char *argv[]){
 				random_removal[j] += i;
 		}
 
-		//cada teste é feito 10 vezes
+		
+		/*------------------------*/		
 		for(int j = 0; j < 4; ++j){
-			printf("\tcrescente %d\n", j);
 			l = createList();
 			bst = createBST();
 			bbst = createAVL();
 			ls = createListWS();
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
-
-			//inserção de cada numero
-			printf("\t\tinsercao\n");
+			
+			// == inserção ==
 			for(int k = 0; k < i; ++k) {
 
-				// printf("insercao lista %d\n", k);
+				// lista
 				timeList = clock();
 				insertList(l, k);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListInsertion[0][size] += timeList;
-				//
-				// printf("insercao listafreq %d\n", k);
+				
+				// lista de frequência
 				timeListFreq = clock();
 				insertListFreq(lf, k);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqInsertion[0][size] += timeListFreq;
-				//
-				// printf("insercao listas sentinela %d %p\n", k, ls);
+				
+				// lista com sentinela
 				timeListWS = clock();
 				insertListWS(ls, k);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSInsertion[0][size] += timeListWS;
 
-				// printf("insercao busca binaria%d\n", k);
+				// busca binaria
 				timeArray = clock();
 				insertArrayBS(a[size], k);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayInsertion[0][size] += timeArray;
 
-				// printf("insercao BST %d\n", k);
+				// arvore binaria de busca
 				timeBST = clock();
 				insertBST(bst, k);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTInsertion[0][size] += timeBST;
 
-				// printf("insercao AVL %d %d\n", k, i);
+				// avl
 				timeAVL = clock();
 				insertAVL(bbst, k);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLInsertion[0][size] += timeAVL;
 			}
 
-			// printf("buscas\n");
-			printf("\t\tbusca\n");
+			
+			// == busca ==
 			for(int k = 0; k < i; ++k) {
 
+				// lista
 				timeList = clock();
 				searchList(l, random_search[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListSearch[0][size] += timeList;
 
+				// lista de frequência
 				timeListFreq = clock();
 				searchListFreq(lf, random_search[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqSearch[0][size] += timeListFreq;
-				//
-				//
+				
+				// lista com sentinela
 				timeListWS = clock();
 				searchListWS(ls, random_search[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSSearch[0][size] += timeListWS;
-				//
-				//
+				
+				// busca binária
 				timeArray = clock();
 				searchArrayBS(a[size], random_search[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArraySearch[0][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				searchBST(bst, random_search[k]);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTSearch[0][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				searchAVL(bbst, random_search[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLSearch[0][size] += timeAVL;
 			}
 
-			// printf("Remocao\n");
-			printf("\t\tremocao\n");
+			
+			// == remoção ==
 			for(int k = 0; k < i; ++k) {
-
+				
+				// lista
 				timeList = clock();
 				removeList(l, random_removal[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListRemoval[0][size] += timeList;
-				//
+				
+
+				// lista de frequência
 				timeListFreq = clock();
 				removeListFreq(lf, random_removal[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqRemoval[0][size] += timeListFreq;
-				//
-				//
+
+				// lista com sentinela
 				timeListWS = clock();
 				removeListWS(ls, random_removal[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSRemoval[0][size] += timeListWS;
-				//
-				//
+
+				// busca binária
 				timeArray = clock();
 				removeArrayBS(a[size], random_removal[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayRemoval[0][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				removeBST(bst, random_removal[k]);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTRemoval[0][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				removeAVL(bbst, random_removal[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLRemoval[0][size] += timeAVL;
 			}
+			
+			// desalocação da memória
 			destroyList(l);
 			destroyBST(bst);
 			destroyAVL(bbst);
@@ -190,6 +200,8 @@ int main(int argc, const char *argv[]){
 			destroyListWS(ls);
 			destroyArrayBS(a[size]);
 		}
+
+		//cálculo das médias
 		avgListSearch[0][size] /= 4.0;
 		avgArraySearch[0][size] /= 4.0;
 		avgListWSSearch[0][size] /= 4.0;
@@ -205,10 +217,9 @@ int main(int argc, const char *argv[]){
 		avgListWSRemoval[0][size] /= 4.0;
 		avgListFreqRemoval[0][size] /= 4.0;
 
-	//ordem decrescente
-	//cada teste é feito 10 vezes
+	/*----------------------Ordem Decrescente-----------------------*/
 		for(int j = 0; j < 4; ++j){
-			printf("\tdecrescente %d\n", j);
+			
 			l = createList();
 			bst = createBST();
 			bbst = createAVL();
@@ -216,80 +227,87 @@ int main(int argc, const char *argv[]){
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
 
-			//inserção de cada numero
-			printf("\t\tinsercao\n");
+			
+			// == inserção ==
 			for(int k = i - 1; k > -1; --k) {
 
+				// lista
 				timeList = clock();
 				insertList(l, k);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListInsertion[1][size] += timeList;
 
+				// lista de frequência
 				timeListFreq = clock();
 				insertListFreq(lf, k);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqInsertion[1][size] += timeListFreq;
 
 
+				// lista com sentinela
 				timeListWS = clock();
 				insertListWS(ls, k);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSInsertion[1][size] += timeListWS;
 
-
+				// busca binária
 				timeArray = clock();
 				insertArrayBS(a[size], k);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayInsertion[1][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				insertBST(bst, k);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTInsertion[1][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				insertAVL(bbst, k);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLInsertion[1][size] += timeAVL;
 			}
 
-			printf("\t\tbusca\n");
+			// == busca ==
 			for(int k = 0; k < i; ++k) {
 
+				// lista
 				timeList = clock();
 				searchList(l, random_search[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListSearch[1][size] += timeList;
 
+				// lista de frequência
 				timeListFreq = clock();
 				searchListFreq(lf, random_search[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqSearch[1][size] += timeListFreq;
 
-
+				// lista com sentinela
 				timeListWS = clock();
 				searchListWS(ls, random_search[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSSearch[1][size] += timeListWS;
 
-
+				// busca binária
 				timeArray = clock();
 				searchArrayBS(a[size], random_search[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArraySearch[1][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				searchBST(bst, random_search[k]);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTSearch[1][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				searchAVL(bbst, random_search[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLSearch[1][size] += timeAVL;
 			}
-
-
 
 			destroyList(l);
 			destroyBST(bst);
@@ -305,80 +323,87 @@ int main(int argc, const char *argv[]){
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
 
+			// reinserção crescente para remoção decrescente
 			for(int k = 0; k < i; ++k) {
 
-				// printf("insercao lista %d\n", k);
+				// lista
 				timeList = clock();
 				insertList(l, k);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListInsertion[0][size] += timeList;
-				//
-				// printf("insercao listafreq %d\n", k);
+				
+				// lista de frequência
 				timeListFreq = clock();
 				insertListFreq(lf, k);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqInsertion[0][size] += timeListFreq;
-				//
-				// printf("insercao listas sentinela %d %p\n", k, ls);
+				
+				// lista com sentinela
 				timeListWS = clock();
 				insertListWS(ls, k);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSInsertion[0][size] += timeListWS;
 
-				// printf("insercao busca binaria%d\n", k);
+				// busca binaria
 				timeArray = clock();
 				insertArrayBS(a[size], k);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayInsertion[0][size] += timeArray;
 
-				// printf("insercao BST %d\n", k);
+				// arvore binária de busca
 				timeBST = clock();
 				insertBST(bst, k);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTInsertion[0][size] += timeBST;
 
-				// printf("insercao AVL %d %d\n", k, i);
+				// avl
 				timeAVL = clock();
 				insertAVL(bbst, k);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLInsertion[0][size] += timeAVL;
 			}
 
-			printf("\t\tremocao\n");
+			// == remoção ==
 			for(int k = i - 1; k > -1; --k) {
 
+				// lista
 				timeList = clock();
 				removeList(l, random_removal[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListRemoval[1][size] += timeList;
 
+				// lista de frequência
 				timeListFreq = clock();
 				removeListFreq(lf, random_removal[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqRemoval[1][size] += timeListFreq;
 
-
+				// lista com sentinela
 				timeListWS = clock();
 				removeListWS(ls, random_removal[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSRemoval[1][size] += timeListWS;
 
-
+				// busca binaria
 				timeArray = clock();
 				removeArrayBS(a[size], random_removal[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayRemoval[1][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				removeBST(bst, random_removal[k]);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTRemoval[1][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				removeAVL(bbst, random_removal[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLRemoval[1][size] += timeAVL;
 			}
+			
+			// desalocação da memória
 			destroyList(l);
 			destroyBST(bst);
 			destroyAVL(bbst);
@@ -387,6 +412,7 @@ int main(int argc, const char *argv[]){
 			destroyArrayBS(a[size]);
 		}
 
+		// calculo da media
 		avgListSearch[1][size] /= 4.0;
 		avgArraySearch[1][size] /= 4.0;
 		avgListWSSearch[1][size] /= 4.0;
@@ -402,10 +428,8 @@ int main(int argc, const char *argv[]){
 		avgListWSRemoval[1][size] /= 4.0;
 		avgListFreqRemoval[1][size] /= 4.0;
 
-	//ordem aleatoria
-	//cada teste é feito 10 vezes
+	/*----------------------Ordem Aleatória-----------------------*/
 		for(int j = 0; j < 4; ++j){
-			printf("\taleatoria %d\n", j);
 
 			l = createList();
 			bst = createBST();
@@ -414,113 +438,127 @@ int main(int argc, const char *argv[]){
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
 
-			//inserção de cada numero
-			printf("\t\tinsercao\n");
+			// == inserção ==
 			for(int k = 0; k < i; ++k) {
 
+				// lista
 				timeList = clock();
 				insertList(l, random_insertion[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListInsertion[2][size] += timeList;
 
+				// lista de frequência
 				timeListFreq = clock();
 				insertListFreq(lf, random_insertion[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqInsertion[2][size] += timeListFreq;
 
-
+				// lista com sentinela
 				timeListWS = clock();
 				insertListWS(ls, random_insertion[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSInsertion[2][size] += timeListWS;
 
-
+				// busca binaria
 				timeArray = clock();
 				insertArrayBS(a[size], random_insertion[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayInsertion[2][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				insertBST(bst, random_insertion[k]);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTInsertion[2][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				insertAVL(bbst, random_insertion[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLInsertion[2][size] += timeAVL;
 			}
 
-			printf("\t\tbusca\n");
+			// == busca ==
 			for(int k = 0; k < i; ++k) {
 
+				// lista 
 				timeList = clock();
 				searchList(l, random_search[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListSearch[2][size] += timeList;
 
+				// lista de frequência
 				timeListFreq = clock();
 				searchListFreq(lf, random_search[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqSearch[2][size] += timeListFreq;
 
-
+				// lista com sentinela
 				timeListWS = clock();
 				searchListWS(ls, random_search[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSSearch[2][size] += timeListWS;
 
+				// busca binaria
 				timeArray = clock();
 				searchArrayBS(a[size], random_search[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArraySearch[2][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				searchBST(bst, random_search[k]);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTSearch[2][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				searchAVL(bbst, random_search[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLSearch[2][size] += timeAVL;
 			}
 
-			printf("\t\tremocao\n");
+			// == remoção ==
 			for(int k = 0; k < i; ++k) {
 
+				// lista
 				timeList = clock();
 				removeList(l, random_removal[k]);
 				timeList = (clock() - timeList)/CLOCKS_PER_SEC;
 				avgListRemoval[2][size] += timeList;
 
-				// searchListFreq(lf, random_removal[k]);
+				// lista de frequência
 				timeListFreq = clock();
 				removeListFreq(lf, random_removal[k]);
 				timeListFreq = (clock() - timeListFreq)/CLOCKS_PER_SEC;
 				avgListFreqRemoval[2][size] += timeListFreq;
 
+				// lista com sentinela
 				timeListWS = clock();
 				removeListWS(ls, random_removal[k]);
 				timeListWS = (clock() - timeListWS)/CLOCKS_PER_SEC;
 				avgListWSRemoval[2][size] += timeListWS;
 
+				// busca binaria
 				timeArray = clock();
 				removeArrayBS(a[size], random_removal[k]);
 				timeArray = (clock() - timeArray)/CLOCKS_PER_SEC;
 				avgArrayRemoval[2][size] += timeArray;
 
+				// arvore binaria de busca
 				timeBST = clock();
 				removeBST(bst, random_removal[k]);
 				timeBST = (clock() - timeBST)/CLOCKS_PER_SEC;
 				avgBSTRemoval[2][size] += timeBST;
 
+				// avl
 				timeAVL = clock();
 				removeAVL(bbst, random_removal[k]);
 				timeAVL = (clock() - timeAVL)/CLOCKS_PER_SEC;
 				avgAVLRemoval[2][size] += timeAVL;
 			}
 
+			//desalocação da memória
 			destroyList(l);
 			destroyBST(bst);
 			destroyAVL(bbst);
@@ -529,6 +567,7 @@ int main(int argc, const char *argv[]){
 			destroyArrayBS(a[size]);
 		}
 
+		// calculo da média
 		avgListSearch[2][size] /= 4.0;
 		avgArraySearch[2][size] /= 4.0;
 		avgListWSSearch[2][size] /= 4.0;
@@ -548,6 +587,7 @@ int main(int argc, const char *argv[]){
 		++size;
 	}
 
+/*---------------Impressão dos resultados---------------*/
 	printf("Tabela 1: Tempo de insercao crescente\n");
 	printf("\tn=100\tn=1.000\tn=10.000\tn=100.000\n");
 	printf("BB");
@@ -890,6 +930,6 @@ int main(int argc, const char *argv[]){
 	}
 	printf("\n-\n");
 
-
+	free(b)
 	return 0;
 }
