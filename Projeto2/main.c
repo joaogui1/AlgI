@@ -31,22 +31,12 @@ int main(int argc, const char *argv[]){
 	double avgListRemoval[3][4] = {0}, avgArrayRemoval[3][4] = {0}, avgListFreqRemoval[3][4] = {0}, avgListWSRemoval[3][4] = {0};
 	double avgBSTInsertion[3][4] = {0}, avgAVLInsertion[3][4] = {0};
 	double avgListInsertion[3][4] = {0}, avgArrayInsertion[3][4] = {0}, avgListFreqInsertion[3][4] = {0}, avgListWSInsertion[3][4] = {0};
-<<<<<<< HEAD
-	int n = 1001;
-=======
 	int n = 100001;
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 	int size = 0;
 
 
 	/*----------------------Ordem Crescente-----------------------*/
 	for(int i = 100; i < n; i *= 10){
-<<<<<<< HEAD
-
-		//gerando vetores de valores aleatórios
-=======
-		// printf("%d\n", i);
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 		for(int j = 0; j < i; ++j)
 			random_removal[j] = random_insertion[j] = (i/2 + j)%i;
 
@@ -70,26 +60,15 @@ int main(int argc, const char *argv[]){
 		
 		/*------------------------*/		
 		for(int j = 0; j < 4; ++j){
-<<<<<<< HEAD
-=======
-			// printf("\tcrescente %d\n", j);
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			l = createList();
 			bst = createBST();
 			bbst = createAVL();
 			ls = createListWS();
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
-<<<<<<< HEAD
 			
 			// == inserção ==
-=======
-
-			//inserção de cada numero
-			// printf("\t\tinsercao\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = 0; k < i; ++k) {
-
 				// lista
 				timeList = clock();
 				insertList(l, k);
@@ -127,13 +106,7 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[0][size] += timeAVL;
 			}
 
-<<<<<<< HEAD
-			
 			// == busca ==
-=======
-			// printf("buscas\n");
-			// printf("\t\tbusca\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = 0; k < i; ++k) {
 
 				// lista
@@ -173,13 +146,7 @@ int main(int argc, const char *argv[]){
 				avgAVLSearch[0][size] += timeAVL;
 			}
 
-<<<<<<< HEAD
-			
 			// == remoção ==
-=======
-			// printf("Remocao\n");
-			// printf("\t\tremocao\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = 0; k < i; ++k) {
 				
 				// lista
@@ -247,11 +214,6 @@ int main(int argc, const char *argv[]){
 
 	/*----------------------Ordem Decrescente-----------------------*/
 		for(int j = 0; j < 4; ++j){
-<<<<<<< HEAD
-			
-=======
-			// printf("\tdecrescente %d\n", j);
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			l = createList();
 			bst = createBST();
 			bbst = createAVL();
@@ -259,13 +221,7 @@ int main(int argc, const char *argv[]){
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
 
-<<<<<<< HEAD
-			
 			// == inserção ==
-=======
-			//inserção de cada numero
-			// printf("\t\tinsercao\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = i - 1; k > -1; --k) {
 
 				// lista
@@ -306,11 +262,7 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[1][size] += timeAVL;
 			}
 
-<<<<<<< HEAD
 			// == busca ==
-=======
-			// printf("\t\tbusca\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = 0; k < i; ++k) {
 
 				// lista
@@ -404,11 +356,7 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[0][size] += timeAVL;
 			}
 
-<<<<<<< HEAD
 			// == remoção ==
-=======
-			// printf("\t\tremocao\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = i - 1; k > -1; --k) {
 
 				// lista
@@ -475,11 +423,6 @@ int main(int argc, const char *argv[]){
 
 	/*----------------------Ordem Aleatória-----------------------*/
 		for(int j = 0; j < 4; ++j){
-<<<<<<< HEAD
-=======
-			// printf("\taleatoria %d\n", j);
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
-
 			l = createList();
 			bst = createBST();
 			bbst = createAVL();
@@ -487,12 +430,7 @@ int main(int argc, const char *argv[]){
 			lf = createListFreq();
 			a[size] = createArrayBS(i);
 
-<<<<<<< HEAD
 			// == inserção ==
-=======
-			//inserção de cada numero
-			// printf("\t\tinsercao\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = 0; k < i; ++k) {
 
 				// lista
@@ -532,11 +470,7 @@ int main(int argc, const char *argv[]){
 				avgAVLInsertion[2][size] += timeAVL;
 			}
 
-<<<<<<< HEAD
 			// == busca ==
-=======
-			// printf("\t\tbusca\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = 0; k < i; ++k) {
 
 				// lista 
@@ -576,11 +510,7 @@ int main(int argc, const char *argv[]){
 				avgAVLSearch[2][size] += timeAVL;
 			}
 
-<<<<<<< HEAD
 			// == remoção ==
-=======
-			// printf("\t\tremocao\n");
->>>>>>> 6ceef2c94dfc21147fc06698c664916136f9aad3
 			for(int k = 0; k < i; ++k) {
 
 				// lista
@@ -992,6 +922,5 @@ int main(int argc, const char *argv[]){
 	}
 	printf("\n-\n");
 
-	free(b)
 	return 0;
 }
