@@ -13,20 +13,37 @@ arrayBS* createArrayBS(int size){
 	newArray->maxSize = size;
 	newArray->currSize = 0;
 	return newArray;
-}	
+}
+int lowerBound(arrayBS* abs, elem x){
+	if(abs == NULL)	return -1;
+
+	//busca binaria no vetor
+	int left = 0, right = abs->currSize-1, mid = 0;
+	while(left < right){
+		mid = (left + right + 1)/ 2;
+
+		if(abs->vec[mid] < x)
+		left = mid;
+		else if(abs->vec[mid] > x)
+		right = mid - 1;
+	}
+
+	return mid;
+}
 
 int insertArrayBS(arrayBS* abs, elem x) {
-	if(isFullArrayBS(abs)) 
+	if(isFullArrayBS(abs))
 		return 1;
-	
+
 	//procura posição para inserir
-	int pos = 0;
-	while(pos < abs->currSize && abs->vec[pos] < x)	
-		pos++;
-	
+	int pos = lowerBound(abs, x) + 1;
+	// printf("pos %d\n", pos);
+	// while(pos < abs->currSize && abs->vec[pos] < x)
+		// pos++;
+
 	//shift do vetor para inserir na posição correta
 	for(int i = abs->currSize; i > pos; i--){
-		abs->vec[i] = abs->vec[i-1]; 
+		abs->vec[i] = abs->vec[i-1];
 	}
 
 	abs->vec[pos] = x;
@@ -37,12 +54,12 @@ int insertArrayBS(arrayBS* abs, elem x) {
 
 int removeArrayBS(arrayBS* abs, elem x){
 	if (abs == NULL) return 1;
-	
+
 	//busca elemento para remover
 	int pos = searchArrayBS(abs, x);
 	if(pos == 0) return 1;
 	pos--;
-	
+
 	//remove elemento e faz shift do resto do vetor
 	abs->currSize--;
 	for(int j = pos; j < abs->currSize; j++){
@@ -52,21 +69,22 @@ int removeArrayBS(arrayBS* abs, elem x){
 	return 0;
 }
 
+
 int searchArrayBS(arrayBS* abs, elem x){
 	if(abs == NULL)	return -1;
 
 	//busca binaria no vetor
-	int left = 0, rigth = abs->currSize-1, mid;
+	int left = 0, right = abs->currSize-1, mid;
 
-	while(left <= rigth){
-		mid = (left+rigth+1) / 2;
-		
+	while(left <= right){
+		mid = (left+right+1) / 2;
+
 		if(abs->vec[mid] < x)
 			left = mid + 1;
 		else if(abs->vec[mid] > x)
-			rigth = mid - 1;
-		else 
-			return mid +1;
+			right = mid - 1;
+		else
+			return mid + 1;
 	}
 
 	return 0;
