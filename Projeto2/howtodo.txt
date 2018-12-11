@@ -1,0 +1,31 @@
+﻿Entrada:
+O programa não recebe nenhuma entrada. Basta compilar e executar o código conforme as indicações abaixo.
+
+
+Sistema Operacional:
+        Linux Ubuntu 18.04
+
+
+Versão do C:
+C 2011
+
+
+Versão do gcc:
+gcc 7.3.0 (Ubuntu 7.3.0-27ubuntu1~18.04)         
+
+
+Compilação:
+        A compilação dos programas pode ser feita por meio de um makefile. É possível compilar cada estrutura separadamente ou todas juntas. Os comandos são os seguintes:
+* make all ou make: compila todo o programa e todos os .c (list, listFreq, listWithSentinel, arrayBS, bst, avl e main), sendo a main última, devido à sua dependência com relação aos outros arquivos. Além disso são utilizados os parâmetros -O2 para garantir otimização. Por último, é definida a versão do compilador.
+* make list: compila apenas a lista
+* make listFreq: compila apenas a lista circular de frequência
+* make listWithSentinel: compila apenas a lista com sentinela
+* make arrayBS: compila apenas o array de busca binária
+* make avl: compila apenas a avl
+* make bst: compila apenas a árvore binária de busca
+* make run: executa o programa.
+* make debug: executa o código com o programa valgrind, para indicar possíveis erros.
+
+
+Observações:
+        O arquivo makefile deve estar na pasta principal e cada estrutura em uma pasta separada com seu nome para que tudo ocorra corretamente. Além disso, na pasta de cada estrutura há um makefile separado, para o caso de ser necessário compilar direto nesse diretório.
